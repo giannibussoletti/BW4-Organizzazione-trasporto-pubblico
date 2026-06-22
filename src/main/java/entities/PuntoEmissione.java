@@ -33,4 +33,21 @@ public class PuntoEmissione {
         this.tipoPuntoEmissione = tipoPuntoEmissione;
         this.distributoreAutomaticoAttivo = distributoreAutomaticoAttivo;
     }
+
+    public TipoPuntoEmissione getTipoPuntoEmissione() {
+        return tipoPuntoEmissione;
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    @Override
+    public String toString() {
+        return "PuntoEmissione{" +
+                "id=" + id +
+                ", tipoPuntoEmissione=" + tipoPuntoEmissione +
+                ", distributoreAutomaticoAttivo=" + distributoreAutomaticoAttivo +
+                '}';
+    }
 }

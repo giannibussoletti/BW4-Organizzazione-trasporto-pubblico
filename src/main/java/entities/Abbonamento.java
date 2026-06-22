@@ -39,4 +39,31 @@ public class Abbonamento {
         this.tessera = tessera;
         this.codiceUnico = codiceUnico;
     }
+
+    public PuntoEmissione getPuntoEmissione() {
+        return puntoEmissione;
+    }
+
+    public TipoAbbonamento getTipoAbbonamento() {
+        return tipoAbbonamento;
+    }
+
+    public Tessera getTessera() {
+        return tessera;
+    }
+
+    public int getCodiceUnico() {
+        return codiceUnico;
+    }
+
+    @Override
+    public String toString() {
+        return "Abbonamento{" +
+                "id=" + id +
+                ", puntoEmissione=" + puntoEmissione +
+                ", tipoAbbonamento=" + tipoAbbonamento +
+                ", tessera=" + tessera +
+                ", codiceUnico=" + codiceUnico +
+                '}';
+    }
 }
