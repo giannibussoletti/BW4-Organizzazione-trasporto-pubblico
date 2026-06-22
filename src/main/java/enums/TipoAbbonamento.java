@@ -1,4 +1,5 @@
 package enums;
 
-public class TipoAbbonamento {
+public enum TipoAbbonamento {
+    SETTIMANALE, MENSILE
 }

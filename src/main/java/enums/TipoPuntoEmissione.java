@@ -1,4 +1,5 @@
 package enums;
 
-public class TipoPuntoEmissione {
+public enum TipoPuntoEmissione {
+    DISTRIBUTORE_AUTOMATICO, RIVENDITORE_AUTORIZZATO
 }

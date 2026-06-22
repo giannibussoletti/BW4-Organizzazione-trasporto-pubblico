@@ -1,4 +1,5 @@
 package enums;
 
-public class TipoMezzo {
+public enum TipoMezzo {
+    TRAM, AUTOBUS
 }
