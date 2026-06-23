@@ -1,14 +1,13 @@
 package DAO;
 
-import entities.Biglietto;
+
 import entities.SingoloBiglietto;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.TypedQuery;
 
-import java.time.LocalDate;
 import java.util.UUID;
-
+//Paolo
 public class SingoloBigliettoDAO {
     public final EntityManager entityManager;
 
