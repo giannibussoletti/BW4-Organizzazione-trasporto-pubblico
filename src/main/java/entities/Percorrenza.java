@@ -25,8 +25,8 @@ public class Percorrenza {
 
     // Relazione N:1 verso Mezzo )
     // @ManyToOne
-   //  @JoinColumn(name = "mezzo_id", nullable = false)
-  //   private Mezzo mezzo;
+    //  @JoinColumn(name = "mezzo_id", nullable = false)
+    //   private Mezzo mezzo;
 
     public Percorrenza() {
     }
@@ -67,11 +67,11 @@ public class Percorrenza {
     }
 
     // public Mezzo getMezzo() {
-       //  return mezzo;
+    //  return mezzo;
     // }
 
     // public void setMezzo(Mezzo mezzo) {
-       //  this.mezzo = mezzo;
+    //  this.mezzo = mezzo;
     // }
 
     @Override
@@ -81,7 +81,8 @@ public class Percorrenza {
                 ", oraPartenza=" + oraPartenza +
                 ", oraArrivo=" + oraArrivo +
                 ", tratta=" + (tratta != null ? tratta.getId() : "null") +
-               // ", mezzo=" + (mezzo != null ? mezzo.getId() : "null") +
+                // ", mezzo=" + (mezzo != null ? mezzo.getId() : "null") +
                 '}';
     }
 }
+
