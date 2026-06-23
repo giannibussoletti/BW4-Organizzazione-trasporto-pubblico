@@ -1,12 +1,13 @@
 package entities;
 
-import enums.TipoPuntoEmissione;
 import jakarta.persistence.*;
 
 import java.util.UUID;
 
 @Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "punto_di_emissione")
+@DiscriminatorColumn(name = "tipo_di_distributore")
 public class PuntoEmissione {
 
     @Id
@@ -14,40 +15,21 @@ public class PuntoEmissione {
     @Column(name = "id_punto_emissione", nullable = false)
     private UUID id;
 
-    @Column(name = "tipo_punto_emissione", nullable = false)
-    @Enumerated(EnumType.STRING)
-    private TipoPuntoEmissione tipoPuntoEmissione;
-
-    @Column(name = "distributore_automatico_attivo")
-    private boolean distributoreAutomaticoAttivo;
-
+    @Column(nullable = false)
+    private String indirizzo;
 
     protected PuntoEmissione() {
     }
 
-    public PuntoEmissione(TipoPuntoEmissione tipoPuntoEmissione) {
-        this.tipoPuntoEmissione = tipoPuntoEmissione;
-    }
-
-    public PuntoEmissione(TipoPuntoEmissione tipoPuntoEmissione, boolean distributoreAutomaticoAttivo) {
-        this.tipoPuntoEmissione = tipoPuntoEmissione;
-        this.distributoreAutomaticoAttivo = distributoreAutomaticoAttivo;
-    }
-
-    public TipoPuntoEmissione getTipoPuntoEmissione() {
-        return tipoPuntoEmissione;
-    }
-
-    public UUID getId() {
-        return id;
+    protected PuntoEmissione(String indirizzo) {
+        this.indirizzo = indirizzo;
     }
 
     @Override
     public String toString() {
         return "PuntoEmissione{" +
                 "id=" + id +
-                ", tipoPuntoEmissione=" + tipoPuntoEmissione +
-                ", distributoreAutomaticoAttivo=" + distributoreAutomaticoAttivo +
+                ", indirizzo='" + indirizzo + '\'' +
                 '}';
     }
 }
