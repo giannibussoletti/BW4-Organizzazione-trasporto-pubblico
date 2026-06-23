@@ -8,7 +8,7 @@ import java.util.UUID;
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "punto_di_emissione")
 @DiscriminatorColumn(name = "tipo_di_distributore")
-public class PuntoEmissione {
+public abstract class PuntoEmissione {
 
     @Id
     @GeneratedValue
