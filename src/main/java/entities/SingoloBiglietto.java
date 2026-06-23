@@ -11,7 +11,7 @@ import java.util.UUID;
 public class SingoloBiglietto {
     @Id
     @GeneratedValue
-    @Column(name = "serial_numbers", nullable = false)
+    @Column(name = "biglietto_id", nullable = false)
     private UUID idBiglietto;
     @Column(name = "date_issue", nullable = false)
     private LocalDate dataEmissione;
@@ -20,6 +20,10 @@ public class SingoloBiglietto {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "single_code")
     private int codiceUnico;
+    //@JoinColumn(name = "id_mezzo", nullable = false)
+    // private id_mezzo
+    // @JoinColumn(name = "punto_di_emissione_id", nullable = false)
+    // private id_punto_emissione
 
     protected SingoloBiglietto (){}
 
