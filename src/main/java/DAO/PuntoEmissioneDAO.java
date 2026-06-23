@@ -4,7 +4,7 @@ import entities.PuntoEmissione;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 
-public ab class PuntoEmissioneDAO {
+public class PuntoEmissioneDAO {
 
     private final EntityManager entityManager;
 
