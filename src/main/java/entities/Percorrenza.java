@@ -1,6 +1,7 @@
 package entities;
 
 import jakarta.persistence.*;
+
 import java.time.LocalTime;
 import java.util.UUID;
 
@@ -31,7 +32,7 @@ public class Percorrenza {
     public Percorrenza() {
     }
 
-    public Percorrenza(LocalTime oraPartenza, LocalTime oraArrivo, Tratta tratta, Mezzo mezzo) {
+    public Percorrenza(LocalTime oraPartenza, LocalTime oraArrivo, Tratta tratta, ParcoMezzi mezzo) {
         this.oraPartenza = oraPartenza;
         this.oraArrivo = oraArrivo;
         this.tratta = tratta;
