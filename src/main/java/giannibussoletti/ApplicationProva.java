@@ -48,11 +48,14 @@ public class ApplicationProva {
         DistributoreAutomatico da2 = new DistributoreAutomatico("Via Milano 22", false);
         RivenditoreAutorizzato ra1 = new RivenditoreAutorizzato("Via Verdi 33", "Tabacchi SRL", "Tabaccheria Centrale");
 
+        PuntoEmissione peFromDB1 = puntoEmissioneDAO.findByID("6d96ab5a-eaff-48af-a058-9c9acaefe934");
+        PuntoEmissione peFromDB2 = puntoEmissioneDAO.findByID("f0f13036-a21d-4e71-b38a-29ebcbb4a11e");
+        PuntoEmissione peFromDB3 = puntoEmissioneDAO.findByID("f971e05d-7fba-4165-a2b5-241a8712870f");
 
         Mezzo m1 = new Mezzo(TipoMezzo.AUTOBUS, 50, "AB123CD");
         Mezzo m2 = new Mezzo(TipoMezzo.TRAM, 120, "TRM567");
         Mezzo m3 = new Mezzo(TipoMezzo.AUTOBUS, 300, "MTR999");
-        
+
 
         Mezzo m1FromDB = mezzoDAO.findById("0d915f20-80d8-4ea8-a60d-4a9997c23bed");
         Mezzo m2FromDB = mezzoDAO.findById("467b2420-5213-49d7-b7ad-3eaa592db9d3");
@@ -60,8 +63,6 @@ public class ApplicationProva {
         StatoDelMezzo sM1 = new StatoDelMezzo(StatoMezzo.ATTIVO, LocalDate.now(), m1FromDB);
         StatoDelMezzo sM2 = new StatoDelMezzo(StatoMezzo.MANUTENZIONE, LocalDate.now(), m2FromDB);
 
-        statoMezzoDAO.save(sM1);
-        statoMezzoDAO.save(sM2);
 
         Tratta tr1 = new Tratta("Modena", "Sassuolo", LocalTime.of(0, 45));
         Tratta tr2 = new Tratta("Carpi", "Modena", LocalTime.of(0, 30));
@@ -77,10 +78,20 @@ public class ApplicationProva {
         SingoloBiglietto b2 = new SingoloBiglietto(LocalDate.now(), m2, da2);
         SingoloBiglietto b3 = new SingoloBiglietto(LocalDate.now(), m3, ra1);
 
-        Abbonamento a1 = new Abbonamento(ra1, TipoAbbonamento.MENSILE, t1, LocalDate.now());
-        Abbonamento a2 = new Abbonamento(da1, TipoAbbonamento.SETTIMANALE, t2, LocalDate.now());
-        Abbonamento a3 = new Abbonamento(da2, TipoAbbonamento.MENSILE, t3, LocalDate.now());
+        Tessera t1FromDB = tesseraDAO.findByCodiceTessera("7103439486469225740");
+        Tessera t2FromDB = tesseraDAO.findByCodiceTessera("1587270423070119018");
+        Tessera t3FromDB = tesseraDAO.findByCodiceTessera("7211449860680267463");
 
+        Abbonamento a1 = new Abbonamento(peFromDB1, TipoAbbonamento.MENSILE, t1FromDB);
+        Abbonamento a2 = new Abbonamento(peFromDB2, TipoAbbonamento.SETTIMANALE, t2FromDB);
+        Abbonamento a3 = new Abbonamento(peFromDB3, TipoAbbonamento.MENSILE, t3FromDB);
+
+
+//        abbonamentoDAO.rinnovoAbbonamento(1821095931, TipoAbbonamento.MENSILE);
+        abbonamentoDAO.scadenzaAbbonamento(1821095931);
+
+//        statoMezzoDAO.save(sM1);
+//        statoMezzoDAO.save(sM2);
 //        trattaDAO.save(tr1);
 //        trattaDAO.save(tr2);
 //        trattaDAO.save(tr3);
@@ -105,7 +116,7 @@ public class ApplicationProva {
 //        mezzoDAO.save(m1);
 //        mezzoDAO.save(m2);
 //        mezzoDAO.save(m3);
-        System.out.println("salvato");
+//        System.out.println("salvato");
     }
 }
 

@@ -3,6 +3,9 @@ package DAO;
 import entities.PuntoEmissione;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.TypedQuery;
+
+import java.util.UUID;
 
 public class PuntoEmissioneDAO {
 
@@ -22,5 +25,11 @@ public class PuntoEmissioneDAO {
         transaction.commit();
 
         System.out.println("Punto di emissione creato correttamente");
+    }
+
+    public PuntoEmissione findByID(String id) {
+        TypedQuery<PuntoEmissione> query = entityManager.createQuery("SELECT p FROM PuntoEmissione p WHERE p.id = :id", PuntoEmissione.class);
+        query.setParameter("id", UUID.fromString(id));
+        return query.getSingleResult();
     }
 }

@@ -34,18 +34,30 @@ public class Abbonamento {
     @Column(name = "data_emissione", nullable = false)
     private LocalDate dataEmissione;
 
+    @Column(name = "data_scadenza", nullable = false)
+    private LocalDate dataScadenza;
+
     protected Abbonamento() {
     }
 
-    public Abbonamento(PuntoEmissione puntoEmissione, TipoAbbonamento tipoAbbonamento, Tessera tessera, LocalDate dataEmissione) {
+    public Abbonamento(PuntoEmissione puntoEmissione, TipoAbbonamento tipoAbbonamento, Tessera tessera) {
         this.puntoEmissione = puntoEmissione;
         this.tipoAbbonamento = tipoAbbonamento;
         this.tessera = tessera;
-        this.dataEmissione = dataEmissione;
+        this.dataEmissione = LocalDate.now();
         Random r = new Random();
         this.codiceUnico = Math.abs(r.nextInt());
+        if (tipoAbbonamento == TipoAbbonamento.SETTIMANALE) {
+            this.dataScadenza = LocalDate.now().plusDays(7);
+        } else {
+            this.dataScadenza = LocalDate.now().plusMonths(1);
+        }
+
     }
 
+    public LocalDate getDataScadenza() {
+        return dataScadenza;
+    }
 
     public PuntoEmissione getPuntoEmissione() {
         return puntoEmissione;
