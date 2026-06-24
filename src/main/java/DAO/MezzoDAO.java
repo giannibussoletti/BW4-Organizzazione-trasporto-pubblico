@@ -10,7 +10,7 @@ import java.util.UUID;
 public class MezzoDAO {
     private final EntityManager entityManager;
 
-    private MezzoDAO(EntityManager em) {
+    public MezzoDAO(EntityManager em) {
         this.entityManager = em;
     }
 

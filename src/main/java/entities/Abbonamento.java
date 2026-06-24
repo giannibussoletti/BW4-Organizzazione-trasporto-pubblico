@@ -47,6 +47,8 @@ public class Abbonamento {
         else this.codiceUnico = -random.nextInt();
     }
 
+
+
     public PuntoEmissione getPuntoEmissione() {
         return puntoEmissione;
     }

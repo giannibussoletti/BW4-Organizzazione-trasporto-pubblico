@@ -28,12 +28,14 @@ public class Utente {
     public Utente() {
     }
 
-    public Utente(String tesserato, String nome, String cognome, LocalDate dataDiNascita, Tessera tessera) {
+    public Utente(String nome, String cognome, LocalDate dataDiNascita, Tessera tessera) {
         this.tessera = tessera;
         this.nome = nome;
         this.cognome = cognome;
         this.dataDiNascita = dataDiNascita;
     }
+
+
 
     public UUID getId() {
         return id;

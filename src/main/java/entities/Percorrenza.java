@@ -33,8 +33,8 @@ public class Percorrenza {
     public Percorrenza() {
     }
 
-    public Percorrenza(Tratta tratta, Mezzo mezzo) {
-        this.oraPartenza = LocalTime.now();
+    public Percorrenza(LocalTime oraPartenza, LocalTime oraArrivo, Tratta tratta, Mezzo mezzo) {
+        this.oraPartenza = oraPartenza;
         this.oraArrivo = oraArrivo;
         this.tratta = tratta;
         this.mezzo = mezzo;

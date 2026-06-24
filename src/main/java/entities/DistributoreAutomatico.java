@@ -16,7 +16,7 @@ public class DistributoreAutomatico extends PuntoEmissione {
     protected DistributoreAutomatico() {
     }
 
-    protected DistributoreAutomatico(String indirizzo, boolean attivo) {
+    public DistributoreAutomatico(String indirizzo, boolean attivo) {
         super(indirizzo);
         this.attivo = attivo;
     }

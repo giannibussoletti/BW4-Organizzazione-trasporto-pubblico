@@ -19,7 +19,7 @@ public class RivenditoreAutorizzato extends PuntoEmissione {
     protected RivenditoreAutorizzato() {
     }
 
-    protected RivenditoreAutorizzato(String indirizzo, String ragioneSociale, String nomeAttivita) {
+    public RivenditoreAutorizzato(String indirizzo, String ragioneSociale, String nomeAttivita) {
         super(indirizzo);
         this.ragioneSociale = ragioneSociale;
         this.nomeAttivita = nomeAttivita;

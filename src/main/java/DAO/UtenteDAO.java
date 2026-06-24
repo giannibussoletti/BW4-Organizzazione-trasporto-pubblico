@@ -20,7 +20,7 @@ public class UtenteDAO {
         transaction.begin();
         em.persist(nuovoUtente);
         transaction.commit();
-        System.out.println("L'utente " + nuovoUtente + " è stato salvato correttamente");
+        System.out.println("L'utente " + nuovoUtente + " e stato salvato correttamente");
     }
     public Utente findById(String id) {
         Utente found = em.find(Utente.class, UUID.fromString(id));
@@ -33,7 +33,7 @@ public class UtenteDAO {
         transaction.begin();
         em.remove(found);
         transaction.commit();
-        System.out.println("utente con id " + id + " è stato eliminato correttamente");
+        System.out.println("utente con id " + id + " e stato eliminato correttamente");
     }
     public Utente findByTesserato(String tesserato) {
         Utente found = em.createQuery(

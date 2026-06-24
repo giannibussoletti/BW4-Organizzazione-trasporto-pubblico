@@ -59,4 +59,13 @@ public class TesseraDAO {
         transaction.commit();
         System.out.println("La tessera con id " + id + " e stata eliminata correttamente");
     }
+    public void rinnova(String codiceTessera) {
+        Tessera tessera = findByCodiceTessera(codiceTessera);
+        EntityTransaction transaction = em.getTransaction();
+        transaction.begin();
+        tessera.setDataDiRinnovo(LocalDate.now().plusYears(1));
+        em.merge(tessera);
+        transaction.commit();
+        System.out.println("La tessera " + codiceTessera + " e stata rinnovata fino al " + tessera.getDataDiRinnovo());
+    }
     }

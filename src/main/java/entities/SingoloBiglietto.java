@@ -47,6 +47,9 @@ public class SingoloBiglietto {
 
     }
 
+
+
+
     //============= GETTERS ==================//
     public UUID getIdBiglietto() {
         return idBiglietto;
