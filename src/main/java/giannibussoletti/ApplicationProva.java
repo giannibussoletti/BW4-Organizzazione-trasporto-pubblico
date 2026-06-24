@@ -59,6 +59,8 @@ public class ApplicationProva {
 
         Mezzo m1FromDB = mezzoDAO.findById("0d915f20-80d8-4ea8-a60d-4a9997c23bed");
         Mezzo m2FromDB = mezzoDAO.findById("467b2420-5213-49d7-b7ad-3eaa592db9d3");
+        Mezzo m3FromDB = mezzoDAO.findById("a741cb54-8444-402b-a875-ab9710d622b7");
+
 
         StatoDelMezzo sM1 = new StatoDelMezzo(StatoMezzo.ATTIVO, LocalDate.now(), m1FromDB);
         StatoDelMezzo sM2 = new StatoDelMezzo(StatoMezzo.MANUTENZIONE, LocalDate.now(), m2FromDB);
@@ -69,9 +71,9 @@ public class ApplicationProva {
         Tratta tr3 = new Tratta("Bologna", "Modena", LocalTime.of(1, 0));
 
 
-        Percorrenza p1 = new Percorrenza(LocalTime.of(8, 0), LocalTime.of(8, 45), tr1, m1);
-        Percorrenza p2 = new Percorrenza(LocalTime.of(9, 0), LocalTime.of(9, 30), tr2, m2);
-        Percorrenza p3 = new Percorrenza(LocalTime.of(7, 30), LocalTime.of(8, 30), tr3, m3);
+        Percorrenza p1 = new Percorrenza(LocalTime.of(8, 0), tr1, m1FromDB);
+        Percorrenza p2 = new Percorrenza(LocalTime.of(9, 0), tr2, m2FromDB);
+        Percorrenza p3 = new Percorrenza(LocalTime.of(7, 30), tr3, m3FromDB);
 
 
         SingoloBiglietto b1 = new SingoloBiglietto(LocalDate.now(), m1, da1);
@@ -88,7 +90,8 @@ public class ApplicationProva {
 
 
 //        abbonamentoDAO.rinnovoAbbonamento(1821095931, TipoAbbonamento.MENSILE);
-        abbonamentoDAO.scadenzaAbbonamento(1821095931);
+//        abbonamentoDAO.scadenzaAbbonamento(1821095931);
+        percorrenzaDAO.percorrenzeAttive().forEach(System.out::println);
 
 //        statoMezzoDAO.save(sM1);
 //        statoMezzoDAO.save(sM2);

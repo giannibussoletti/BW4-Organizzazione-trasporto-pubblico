@@ -38,6 +38,13 @@ public class Mezzo {
         return id;
     }
 
+    public String getTargaVeicolo() {
+        return targaVeicolo;
+    }
+
+    public TipoMezzo getTipoMezzo() {
+        return tipoMezzo;
+    }
 
     public int getCapienza() {
         return capienza;

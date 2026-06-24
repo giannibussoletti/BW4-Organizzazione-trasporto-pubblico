@@ -33,9 +33,8 @@ public class Percorrenza {
     public Percorrenza() {
     }
 
-    public Percorrenza(LocalTime oraPartenza, LocalTime oraArrivo, Tratta tratta, Mezzo mezzo) {
+    public Percorrenza(LocalTime oraPartenza, Tratta tratta, Mezzo mezzo) {
         this.oraPartenza = oraPartenza;
-        this.oraArrivo = oraArrivo;
         this.tratta = tratta;
         this.mezzo = mezzo;
     }
@@ -82,8 +81,8 @@ public class Percorrenza {
                 "id=" + id +
                 ", oraPartenza=" + oraPartenza +
                 ", oraArrivo=" + oraArrivo +
-                ", tratta=" + (tratta != null ? tratta.getId() : "null") +
-                ", mezzo=" + (mezzo != null ? mezzo.getId() : "null") +
+                ", tratta=" + (tratta != null ? tratta.getPartenza() : "null") + "," + (tratta != null ? tratta.getCapolinea() : "null") + "," + (tratta != null ? tratta.getTempoPercorrenza() : "null") +
+                ", mezzo=" + (mezzo != null ? mezzo.getTipoMezzo() : "null") + "," + (mezzo != null ? mezzo.getTargaVeicolo() : "null") +
                 '}';
     }
 }
