@@ -6,6 +6,7 @@ import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.TypedQuery;
 
 import java.util.List;
+import java.util.UUID;
 
 public class PercorrenzaDAO {
 
@@ -29,8 +30,15 @@ public class PercorrenzaDAO {
 
     public List<Percorrenza> percorrenzeAttive() {
         TypedQuery<Percorrenza> query = entityManager.createQuery("SELECT p FROM Percorrenza p JOIN FETCH p.mezzo JOIN FETCH p.tratta WHERE p.oraArrivo IS NULL", Percorrenza.class);
-        
+
         return query.getResultList();
 
     }
+
+    public void NumPercorrenzeTratta(String id_tratta) {
+        TypedQuery<Long> query = entityManager.createQuery("SELECT COUNT(p) FROM Percorrenza p WHERE p.tratta.id = :id_tratta", Long.class);
+        query.setParameter("id_tratta", UUID.fromString(id_tratta));
+        System.out.println(query.getSingleResult());
+    }
+
 }

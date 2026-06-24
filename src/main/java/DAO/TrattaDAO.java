@@ -32,4 +32,5 @@ public class TrattaDAO {
         if (found == null) throw new NotFoundException(id);
         return found;
     }
+
 }

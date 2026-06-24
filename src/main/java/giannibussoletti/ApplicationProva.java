@@ -68,11 +68,13 @@ public class ApplicationProva {
         Tratta tr2 = new Tratta("Carpi", "Modena", LocalTime.of(0, 30));
         Tratta tr3 = new Tratta("Bologna", "Modena", LocalTime.of(1, 0));
 
+        Tratta tr1FromDB = trattaDAO.findById("4d028197-c8b0-4ed0-9d53-074c6dd4268b");
+        Tratta tr2FromDB = trattaDAO.findById("6cbd6b4d-8a4f-4a9f-b6d5-753d8b8491e3");
+        Tratta tr3FromDB = trattaDAO.findById("e41564ed-ab32-431d-a06b-bdc87bbf27b0");
 
-        Percorrenza p1 = new Percorrenza(LocalTime.of(8, 0), LocalTime.of(8, 45), tr1, m1);
-        Percorrenza p2 = new Percorrenza(LocalTime.of(9, 0), LocalTime.of(9, 30), tr2, m2);
-        Percorrenza p3 = new Percorrenza(LocalTime.of(7, 30), LocalTime.of(8, 30), tr3, m3);
-
+        Percorrenza p1 = new Percorrenza(LocalTime.of(8, 0), tr3FromDB, m2FromDB);
+        Percorrenza p2 = new Percorrenza(LocalTime.of(9, 0), tr3FromDB, m2FromDB);
+        Percorrenza p3 = new Percorrenza(LocalTime.of(7, 30), tr3FromDB, m2FromDB);
 
         SingoloBiglietto b1 = new SingoloBiglietto(LocalDate.now(), m1, da1);
         SingoloBiglietto b2 = new SingoloBiglietto(LocalDate.now(), m2, da2);
@@ -85,8 +87,10 @@ public class ApplicationProva {
         Abbonamento a1 = new Abbonamento(peFromDB1, TipoAbbonamento.MENSILE, t1FromDB);
         Abbonamento a2 = new Abbonamento(peFromDB2, TipoAbbonamento.SETTIMANALE, t2FromDB);
         Abbonamento a3 = new Abbonamento(peFromDB3, TipoAbbonamento.MENSILE, t3FromDB);
-percorrenzaDAO.
 
+
+//        percorrenzaDAO.percorrenzeAttive().forEach(System.out::println);
+        percorrenzaDAO.NumPercorrenzeTratta("4d028197-c8b0-4ed0-9d53-074c6dd4268b");
 //        abbonamentoDAO.rinnovoAbbonamento(1821095931, TipoAbbonamento.MENSILE);
 //        abbonamentoDAO.scadenzaAbbonamento(1821095931);
 
