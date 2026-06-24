@@ -25,8 +25,11 @@ public class SingoloBiglietto {
     @Column(name = "single_code")
     private int codiceUnico;
 
+    @ManyToOne
     @JoinColumn(name = "id_mezzo", nullable = false)
     private Mezzo id_mezzo;
+
+    @ManyToOne
     @JoinColumn(name = "id_punto_di_emissione", nullable = false)
     private PuntoEmissione id_punto_emissione;
 

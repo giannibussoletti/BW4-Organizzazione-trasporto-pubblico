@@ -7,7 +7,7 @@ import jakarta.persistence.*;
 import java.util.UUID;
 
 @Entity
-@Table(name = "status")
+@Table(name = "mezzo")
 public class Mezzo {
     @Id
     @GeneratedValue
@@ -20,13 +20,16 @@ public class Mezzo {
     @Column(name = "capienza_massima", nullable = false)
     private int capienza;
 
+    @Column(name = "targa_veicolo", nullable = false)
+    private String targaVeicolo;
 
     protected Mezzo() {
     }
 
-    public Mezzo(TipoMezzo tipoMezzo, int capienza) {
+    public Mezzo(TipoMezzo tipoMezzo, int capienza, String targaVeicolo) {
         this.tipoMezzo = tipoMezzo;
         this.capienza = capienza;
+        this.targaVeicolo = targaVeicolo;
     }
     //============= GETTERS ==================//
 

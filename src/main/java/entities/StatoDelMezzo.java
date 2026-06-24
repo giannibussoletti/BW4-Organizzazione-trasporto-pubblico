@@ -25,7 +25,7 @@ public class StatoDelMezzo {
     @Column(name = "data_fine", nullable = false)
     private LocalDate dataFine;
 
-    @OneToMany
+    @ManyToOne
     @JoinColumn(name = "id_mezzo", nullable = false)
     private Mezzo idMezzo;
 
