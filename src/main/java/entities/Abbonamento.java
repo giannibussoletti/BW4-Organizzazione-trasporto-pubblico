@@ -3,6 +3,7 @@ package entities;
 import enums.TipoAbbonamento;
 import jakarta.persistence.*;
 
+import java.util.Random;
 import java.util.UUID;
 
 
@@ -33,11 +34,13 @@ public class Abbonamento {
     protected Abbonamento() {
     }
 
-    public Abbonamento(PuntoEmissione puntoEmissione, TipoAbbonamento tipoAbbonamento, Tessera tessera, int codiceUnico) {
+    public Abbonamento(PuntoEmissione puntoEmissione, TipoAbbonamento tipoAbbonamento, Tessera tessera) {
         this.puntoEmissione = puntoEmissione;
         this.tipoAbbonamento = tipoAbbonamento;
         this.tessera = tessera;
-        this.codiceUnico = codiceUnico;
+        Random random = new Random();
+        if (random.nextInt() > 0) this.codiceUnico = random.nextInt();
+        else this.codiceUnico = -random.nextInt();
     }
 
     public PuntoEmissione getPuntoEmissione() {

@@ -3,6 +3,7 @@ package entities;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.Random;
 import java.util.UUID;
 
 @Entity
@@ -15,7 +16,7 @@ public class Tessera {
     private UUID id;
 
     @Column(name = "codice_tessera", nullable = false, unique = true)
-    private String codiceTessera;
+    private long codiceTessera;
 
     @Column(name = "data_di_rinnovo", nullable = false)
     private LocalDate dataDiRinnovo;
@@ -26,8 +27,12 @@ public class Tessera {
     public Tessera() {
     }
 
-    public Tessera(String codiceTessera, LocalDate dataEmissione, LocalDate dataDiRinnovo) {
-        this.codiceTessera = codiceTessera;
+    public Tessera(LocalDate dataEmissione, LocalDate dataDiRinnovo) {
+        Random random = new Random();
+        this.codiceTessera = random.nextLong();
+        if (random.nextLong() > 0) this.codiceTessera = random.nextLong();
+        else this.codiceTessera = -random.nextLong();
+
         this.dataEmissione = dataEmissione;
         this.dataDiRinnovo = dataDiRinnovo;
     }
@@ -36,13 +41,10 @@ public class Tessera {
         return id;
     }
 
-    public String getCodiceTessera() {
+    public long getCodiceTessera() {
         return codiceTessera;
     }
 
-    public void setCodiceTessera(String codiceTessera) {
-        this.codiceTessera = codiceTessera;
-    }
 
     public LocalDate getDataDiRinnovo() {
         return dataDiRinnovo;

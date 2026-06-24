@@ -3,12 +3,14 @@ package entities;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.Random;
 import java.util.UUID;
 
 //Paolo
 @Entity
 @Table(name = "single_ticket")
 public class SingoloBiglietto {
+
     @Id
     @GeneratedValue
     @Column(name = "biglietto_id", nullable = false)
@@ -20,7 +22,6 @@ public class SingoloBiglietto {
     @Column(name = "date_certification")
     private LocalDate dataVidimazione;
 
-    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "single_code")
     private int codiceUnico;
 
@@ -33,6 +34,9 @@ public class SingoloBiglietto {
     }
 
     public SingoloBiglietto(LocalDate dataEmissione, LocalDate dataVidimazione, Mezzo id_mezzo, PuntoEmissione id_punto_emissione) {
+        Random random = new Random();
+        if (random.nextInt() > 0) this.codiceUnico = random.nextInt();
+        else this.codiceUnico = -random.nextInt();
         this.dataEmissione = dataEmissione;
         this.dataVidimazione = dataVidimazione;
         this.id_mezzo = id_mezzo;
