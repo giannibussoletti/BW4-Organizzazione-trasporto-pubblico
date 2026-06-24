@@ -23,6 +23,9 @@ public class Tessera {
 
     @Column(name = "data_emissione", nullable = false)
     private LocalDate dataEmissione;
+    @OneToOne
+    @JoinColumn(name = "id_utente", nullable = false, unique = true)
+    private Utente utente;
 
     public Tessera() {
     }
