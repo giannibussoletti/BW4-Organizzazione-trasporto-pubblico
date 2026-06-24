@@ -3,6 +3,7 @@ package entities;
 import enums.TipoAbbonamento;
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
 import java.util.Random;
 import java.util.UUID;
 
@@ -30,14 +31,17 @@ public class Abbonamento {
     @Column(name = "codice_unico", nullable = false)
     private int codiceUnico;
 
+    @Column(name = "data_emissione", nullable = false)
+    private LocalDate dataEmissione;
 
     protected Abbonamento() {
     }
 
-    public Abbonamento(PuntoEmissione puntoEmissione, TipoAbbonamento tipoAbbonamento, Tessera tessera) {
+    public Abbonamento(PuntoEmissione puntoEmissione, TipoAbbonamento tipoAbbonamento, Tessera tessera, LocalDate dataEmissione) {
         this.puntoEmissione = puntoEmissione;
         this.tipoAbbonamento = tipoAbbonamento;
         this.tessera = tessera;
+        this.dataEmissione = dataEmissione;
         Random random = new Random();
         if (random.nextInt() > 0) this.codiceUnico = random.nextInt();
         else this.codiceUnico = -random.nextInt();

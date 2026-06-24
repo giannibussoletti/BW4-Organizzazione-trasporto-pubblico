@@ -17,7 +17,7 @@ public class Percorrenza {
     @Column(name = "ora_partenza", nullable = false)
     private LocalTime oraPartenza;
 
-    @Column(name = "ora_arrivo", nullable = false)
+    @Column(name = "ora_arrivo")
     private LocalTime oraArrivo;
 
     // Relazione N:1 verso Tratta
@@ -33,8 +33,8 @@ public class Percorrenza {
     public Percorrenza() {
     }
 
-    public Percorrenza(LocalTime oraPartenza, LocalTime oraArrivo, Tratta tratta, Mezzo mezzo) {
-        this.oraPartenza = oraPartenza;
+    public Percorrenza(Tratta tratta, Mezzo mezzo) {
+        this.oraPartenza = LocalTime.now();
         this.oraArrivo = oraArrivo;
         this.tratta = tratta;
         this.mezzo = mezzo;
