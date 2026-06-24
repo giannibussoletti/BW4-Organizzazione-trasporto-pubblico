@@ -54,7 +54,52 @@ public class SingoloBigliettoDAO {
         transaction.commit();
     }
 
+    // ===== 1. METODO DI ACQUISTO ====
+    public void acquistaBiglietto(entities.Mezzo mezzo, entities.PuntoEmissione punto) {
+        EntityTransaction transaction = this.entityManager.getTransaction();
+        try {
+            transaction.begin();
 
+            SingoloBiglietto nuevoBiglietto = new SingoloBiglietto(java.time.LocalDate.now(), mezzo, punto);
 
+            this.entityManager.persist(nuevoBiglietto);
+
+            transaction.commit();
+            System.out.println("Biglietto acquistato con successo! ID: " + nuevoBiglietto.getIdBiglietto());
+        } catch (Exception e) {
+            if (transaction.isActive()) transaction.rollback();
+            System.err.println("Errore durante l'acquisto del biglietto: " + e.getMessage());
+        }
+    }
+
+    // ===== 2. BIGLIETTI VIDIMATI PER UN SINGOLO MEZZO IN UN PERIODO ====
+    public long getBigliettiVidimatiPerMezzoInPeriodo(entities.Mezzo mezzo, java.time.LocalDate inizio, java.time.LocalDate fine) {
+        TypedQuery<Long> query = entityManager.createQuery(
+                "SELECT COUNT(b) FROM SingoloBiglietto b " +
+                        "WHERE b.id_mezzo = :mezzo " +
+                        "AND b.dataVidimazione BETWEEN :inizio AND :fine",
+                Long.class
+        );
+
+        query.setParameter("mezzo", mezzo);
+        query.setParameter("inizio", inizio);
+        query.setParameter("fine", fine);
+
+        return query.getSingleResult();
+    }
+
+    // ===== 3. BIGLIETTI VIDIMATI IN TOTALE IN UN PERIODO ====
+    public long getBigliettiVidimatiTotaliInPeriodo(java.time.LocalDate inizio, java.time.LocalDate fine) {
+        TypedQuery<Long> query = entityManager.createQuery(
+                "SELECT COUNT(b) FROM SingoloBiglietto b " +
+                        "WHERE b.dataVidimazione BETWEEN :inizio AND :fine",
+                Long.class
+        );
+
+        query.setParameter("inizio", inizio);
+        query.setParameter("fine", fine);
+
+        return query.getSingleResult();
+    }
 
 }
