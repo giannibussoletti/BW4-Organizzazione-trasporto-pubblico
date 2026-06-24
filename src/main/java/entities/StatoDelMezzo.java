@@ -22,7 +22,7 @@ public class StatoDelMezzo {
     @Column(name = "data_inizio", nullable = false)
     private LocalDate dataInizio;
 
-    @Column(name = "data_fine", nullable = false)
+    @Column(name = "data_fine")
     private LocalDate dataFine;
 
     @ManyToOne
@@ -32,10 +32,9 @@ public class StatoDelMezzo {
     protected StatoDelMezzo() {
     }
 
-    public StatoDelMezzo(StatoMezzo type, LocalDate dataInizio, LocalDate dataFine, Mezzo idMezzo) {
+    public StatoDelMezzo(StatoMezzo type, LocalDate dataInizio, Mezzo idMezzo) {
         this.type = type;
         this.dataInizio = dataInizio;
-        this.dataFine = dataFine;
         this.idMezzo = idMezzo;
     }
     //============= GETTERS ==================//

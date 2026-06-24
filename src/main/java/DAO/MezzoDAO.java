@@ -26,20 +26,20 @@ public class MezzoDAO {
         System.out.println(newMezzo + "creato con successo!");
     }
 
-    public Mezzo findById(UUID id) {
+    public Mezzo findById(String id) {
 
         TypedQuery<Mezzo> query = entityManager.createQuery(
                 "SELECT m FROM Mezzo m WHERE m.id = :id",
                 Mezzo.class
         );
 
-        query.setParameter("id", id);
+        query.setParameter("id", UUID.fromString(id));
 
         return query.getSingleResult();
     }
 
     //Chiedere si e meglio cambiare id per targa
-    public void deleteById(UUID id) {
+    public void deleteById(String id) {
 
         EntityTransaction transaction = entityManager.getTransaction();
 

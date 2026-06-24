@@ -42,11 +42,9 @@ public class Abbonamento {
         this.tipoAbbonamento = tipoAbbonamento;
         this.tessera = tessera;
         this.dataEmissione = dataEmissione;
-        Random random = new Random();
-        if (random.nextInt() > 0) this.codiceUnico = random.nextInt();
-        else this.codiceUnico = -random.nextInt();
+        Random r = new Random();
+        this.codiceUnico = Math.abs(r.nextInt());
     }
-
 
 
     public PuntoEmissione getPuntoEmissione() {

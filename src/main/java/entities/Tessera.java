@@ -32,11 +32,8 @@ public class Tessera {
     }
 
     public Tessera(LocalDate dataEmissione, LocalDate dataDiRinnovo) {
-        Random random = new Random();
-        this.codiceTessera = random.nextLong();
-        if (random.nextLong() > 0) this.codiceTessera = random.nextLong();
-        else this.codiceTessera = -random.nextLong();
-
+        Random r = new Random();
+        this.codiceTessera = Math.abs(r.nextLong());
         this.dataEmissione = dataEmissione;
         this.dataDiRinnovo = dataDiRinnovo;
     }

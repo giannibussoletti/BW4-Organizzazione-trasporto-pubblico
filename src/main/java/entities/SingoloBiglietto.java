@@ -36,18 +36,15 @@ public class SingoloBiglietto {
     protected SingoloBiglietto() {
     }
 
-    public SingoloBiglietto(LocalDate dataEmissione, LocalDate dataVidimazione, Mezzo id_mezzo, PuntoEmissione id_punto_emissione) {
-        Random random = new Random();
-        if (random.nextInt() > 0) this.codiceUnico = random.nextInt();
-        else this.codiceUnico = -random.nextInt();
+    public SingoloBiglietto(LocalDate dataEmissione, Mezzo id_mezzo, PuntoEmissione id_punto_emissione) {
+        Random r = new Random();
+        this.codiceUnico = Math.abs(r.nextInt());
         this.dataEmissione = dataEmissione;
         this.dataVidimazione = dataVidimazione;
         this.id_mezzo = id_mezzo;
         this.id_punto_emissione = id_punto_emissione;
 
     }
-
-
 
 
     //============= GETTERS ==================//
