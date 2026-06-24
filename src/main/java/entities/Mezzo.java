@@ -14,6 +14,7 @@ public class Mezzo {
     @Column(name = "id_mezzo", nullable = false)
     private UUID id;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "tipo_mezzo", nullable = false)
     private TipoMezzo tipoMezzo;
 
