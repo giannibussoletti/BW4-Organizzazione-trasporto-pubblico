@@ -1,10 +1,9 @@
 package entities;
 
 
-import enums.StatoMezzo;
+import enums.TipoMezzo;
 import jakarta.persistence.*;
 
-import java.time.LocalDate;
 import java.util.UUID;
 
 @Entity
@@ -12,25 +11,21 @@ import java.util.UUID;
 public class Mezzo {
     @Id
     @GeneratedValue
-    @Column(name = "id_stato_vehicle",nullable = false)
+    @Column(name = "id_mezzo", nullable = false)
     private UUID id;
 
-    //idStatodelMezzo
-
-    @Column(name = "status_vehicle")
-    @Enumerated(EnumType.STRING)
-    private StatoMezzo type;
+    @Column(name = "tipo_mezzo", nullable = false)
+    private TipoMezzo tipoMezzo;
 
     @Column(name = "capienza_massima", nullable = false)
     private int capienza;
 
-    @GeneratedValue
-    @Column(name = "id_tratta", nullable = false)
-    private UUID idTratta;
 
-    protected Mezzo(){}
-    public Mezzo(StatoMezzo type,int capienza, LocalDate dataInizio, LocalDate dataFine){
-        this.type = type;
+    protected Mezzo() {
+    }
+
+    public Mezzo(TipoMezzo tipoMezzo, int capienza) {
+        this.tipoMezzo = tipoMezzo;
         this.capienza = capienza;
     }
     //============= GETTERS ==================//
@@ -39,26 +34,15 @@ public class Mezzo {
         return id;
     }
 
-    public StatoMezzo getType() {
-        return type;
-    }
 
     public int getCapienza() {
         return capienza;
-    }
-
-    public UUID getIdTratta() {
-        return idTratta;
     }
 
     //============= SETTERS ==================//
 
     public void setCapienza(int capienza) {
         this.capienza = capienza;
-    }
-
-    public void setType(StatoMezzo type) {
-        this.type = type;
     }
 
 
@@ -69,9 +53,8 @@ public class Mezzo {
     public String toString() {
         return "Mezzo{" +
                 "id=" + id +
-                ", type=" + type +
+                ", tipoMezzo=" + tipoMezzo +
                 ", capienza=" + capienza +
-                ", idTratta=" + idTratta +
                 '}';
     }
 }

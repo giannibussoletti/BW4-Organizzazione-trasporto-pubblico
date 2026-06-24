@@ -18,15 +18,15 @@ public class Abbonamento {
     @JoinColumn(name = "id_punto_emissione", nullable = false)
     private PuntoEmissione puntoEmissione;
 
-    @Column(name = "tipo_di_abbonamento")
+    @Column(name = "tipo_di_abbonamento", nullable = false)
     @Enumerated(EnumType.STRING)
     private TipoAbbonamento tipoAbbonamento;
 
-    @OneToOne
-    @JoinColumn(name = "id_tessera", nullable = false, unique = true)
+    @ManyToOne
+    @JoinColumn(name = "id_tessera", nullable = false)
     private Tessera tessera;
 
-    @Column(name = "codice_unico")
+    @Column(name = "codice_unico", nullable = false)
     private int codiceUnico;
 
 

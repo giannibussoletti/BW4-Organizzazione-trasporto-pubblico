@@ -11,12 +11,13 @@ public class Percorrenza {
 
     @Id
     @GeneratedValue
+    @Column(name = "id_percorrenza", nullable = false)
     private UUID id;
 
-    @Column(name = "ora_partenza")
+    @Column(name = "ora_partenza", nullable = false)
     private LocalTime oraPartenza;
 
-    @Column(name = "ora_arrivo")
+    @Column(name = "ora_arrivo", nullable = false)
     private LocalTime oraArrivo;
 
     // Relazione N:1 verso Tratta
@@ -24,19 +25,19 @@ public class Percorrenza {
     @JoinColumn(name = "tratta_id", nullable = false)
     private Tratta tratta;
 
-    // Relazione N:1 verso Mezzo )
-    // @ManyToOne
-    //  @JoinColumn(name = "mezzo_id", nullable = false)
-    //   private Mezzo mezzo;
+    //     Relazione N:1 verso Mezzo)
+    @ManyToOne
+    @JoinColumn(name = "mezzo_id", nullable = false)
+    private Mezzo mezzo;
 
     public Percorrenza() {
     }
 
-    public Percorrenza(LocalTime oraPartenza, LocalTime oraArrivo, Tratta tratta, ParcoMezzi mezzo) {
+    public Percorrenza(LocalTime oraPartenza, LocalTime oraArrivo, Tratta tratta, Mezzo mezzo) {
         this.oraPartenza = oraPartenza;
         this.oraArrivo = oraArrivo;
         this.tratta = tratta;
-        //  this.mezzo = mezzo;
+        this.mezzo = mezzo;
     }
 
     public UUID getId() {
@@ -67,13 +68,13 @@ public class Percorrenza {
         this.tratta = tratta;
     }
 
-    // public Mezzo getMezzo() {
-    //  return mezzo;
-    // }
+    public Mezzo getMezzo() {
+        return mezzo;
+    }
 
-    // public void setMezzo(Mezzo mezzo) {
-    //  this.mezzo = mezzo;
-    // }
+    public void setMezzo(Mezzo mezzo) {
+        this.mezzo = mezzo;
+    }
 
     @Override
     public String toString() {
@@ -82,7 +83,7 @@ public class Percorrenza {
                 ", oraPartenza=" + oraPartenza +
                 ", oraArrivo=" + oraArrivo +
                 ", tratta=" + (tratta != null ? tratta.getId() : "null") +
-                // ", mezzo=" + (mezzo != null ? mezzo.getId() : "null") +
+                ", mezzo=" + (mezzo != null ? mezzo.getId() : "null") +
                 '}';
     }
 }

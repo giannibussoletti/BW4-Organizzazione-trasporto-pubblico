@@ -1,8 +1,8 @@
 package entities;
 
 import jakarta.persistence.*;
+
 import java.time.LocalTime;
-import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -13,16 +13,14 @@ public class Tratta {
     @GeneratedValue
     private UUID id;
 
+    @Column(nullable = false)
     private String partenza; // e
 
+    @Column(nullable = false)
     private String capolinea;
 
-    @Column(name = "tempo_percorrenza")
+    @Column(name = "tempo_percorrenza", nullable = false)
     private LocalTime tempoPercorrenza;
-
-    // Relazione 1:N bidirezionale con Percorrenza
-    @OneToMany(mappedBy = "tratta", cascade = CascadeType.ALL)
-    private List<Percorrenza> percorsi;
 
     public Tratta() {
     }
@@ -61,13 +59,6 @@ public class Tratta {
         this.tempoPercorrenza = tempoPercorrenza;
     }
 
-    public List<Percorrenza> getPercorsi() {
-        return percorsi;
-    }
-
-    public void setPercorsi(List<Percorrenza> percorsi) {
-        this.percorsi = percorsi;
-    }
 
     @Override
     public String toString() {
