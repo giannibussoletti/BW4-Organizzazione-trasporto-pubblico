@@ -1,8 +1,11 @@
 package DAO;
 
 import entities.Tratta;
+import exception.NotFoundException;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
+
+import java.util.UUID;
 
 public class TrattaDAO {
 
@@ -22,5 +25,11 @@ public class TrattaDAO {
         transaction.commit();
 
         System.out.println("Tratta creata correttamente");
+    }
+
+    public Tratta findById(String id) {
+        Tratta found = entityManager.find(Tratta.class, UUID.fromString(id));
+        if (found == null) throw new NotFoundException(id);
+        return found;
     }
 }
