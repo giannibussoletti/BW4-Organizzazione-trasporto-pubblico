@@ -95,7 +95,7 @@ public class ApplicationProva {
 //        abbonamentoDAO.rinnovoAbbonamento(1821095931, TipoAbbonamento.MENSILE);
 //        abbonamentoDAO.scadenzaAbbonamento(1821095931);
 //        percorrenzaDAO.differenzaTempoPercorrenza("4d028197-c8b0-4ed0-9d53-074c6dd4268b");
-        Acquisizione.BigliettiEAbbonamenti(tesseraDAO, utenteDAO, bigliettoDAO, trattaDAO, percorrenzaDAO, puntoEmissioneDAO);
+        Acquisizione.BigliettiEAbbonamenti(tesseraDAO, utenteDAO, bigliettoDAO, trattaDAO, percorrenzaDAO, puntoEmissioneDAO, abbonamentoDAO);
 
 //        statoMezzoDAO.save(sM1);
 //        statoMezzoDAO.save(sM2);
