@@ -1,12 +1,21 @@
 package SCANNER;
 
+import DAO.AbbonamentoDAO;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Persistence;
+
 import java.util.Scanner;
 
 public class SimoScannerProvaIdea {
 
     private static final Scanner scanner = new Scanner(System.in);
 
+    public static final EntityManagerFactory emf = Persistence.createEntityManagerFactory("bw4traspublicpu");
+    public static final EntityManager em = emf.createEntityManager();
+    private static AbbonamentoDAO abbonamentoDAO = new AbbonamentoDAO(em);
     public static void main(String[] args) {
+
 
         boolean i = true;
 
@@ -51,7 +60,7 @@ public class SimoScannerProvaIdea {
                 case 1 ->System.out.println("f");
                 case 2 -> System.out.println("f");
                 case 3 -> System.out.println("f");
-                case 4 -> System.out.println("f");
+                case 4 -> verificaAbbonamento();
                 case 5 -> System.out.println("f");
                 case 0 -> b = true;
                 default -> System.out.println("Scelta non valida");
@@ -89,7 +98,18 @@ public class SimoScannerProvaIdea {
         }
     }
 
+    private static void verificaAbbonamento() {
+        System.out.println("Inserisci codice tessera:");
+        long codice = Long.parseLong(scanner.nextLine());
 
+        boolean valido = abbonamentoDAO.isAbbonamentoValidoByCodiceTessera(codice);
+
+        if (valido) {
+            System.out.println("L'abbonamento è valido.");
+        } else {
+            System.out.println("L'abbonamento NON è valido.");
+        }
+    }
 
 
 }
