@@ -1,9 +1,12 @@
 package entities;
 
 
+import enums.StatoMezzo;
 import enums.TipoMezzo;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -24,6 +27,9 @@ public class Mezzo {
     @Column(name = "targa_veicolo", nullable = false)
     private String targaVeicolo;
 
+    @OneToMany(mappedBy = "idMezzo", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<StatoDelMezzo> periodiStato = new ArrayList<>();
+
     protected Mezzo() {
     }
 
@@ -32,6 +38,7 @@ public class Mezzo {
         this.capienza = capienza;
         this.targaVeicolo = targaVeicolo;
     }
+
     //============= GETTERS ==================//
 
     public UUID getId() {
@@ -50,6 +57,9 @@ public class Mezzo {
         return capienza;
     }
 
+    public List<StatoDelMezzo> getPeriodiStato() {
+        return periodiStato;
+    }
     //============= SETTERS ==================//
 
     public void setCapienza(int capienza) {
