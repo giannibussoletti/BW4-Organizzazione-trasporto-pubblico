@@ -3,6 +3,7 @@ package gianniScanner;
 
 import DAO.*;
 import entities.*;
+import enums.TipoAbbonamento;
 
 import java.time.LocalDate;
 import java.util.Scanner;
@@ -61,9 +62,51 @@ public class Acquisizione {
                                     while (true) {
                                         if (choiceAcquisto.equalsIgnoreCase("si") || choiceAcquisto.equalsIgnoreCase("no")) {
                                             CreazioneBiglietti.vendita(choiceAcquisto, trattaDAO, percorrenzaDAO, puntoEmissioneDAO, singoloBigliettoDAO, puntoScelto);
-                                        } else {
-                                            System.out.println("Ti auguriamo buon viaggio");
-                                            System.exit(0);
+                                            break;
+                                        } else System.out.println("Valore non valido");
+                                    }
+                                }
+                            } else {
+                                boolean abbonamentoValido = abbonamentoDAO.isAbbonamentoValidoByCodiceTessera(numeroTessera);
+                                if (abbonamentoValido) {
+                                    System.out.println("Il tuo abbonamento è ancora valido, ti auguriamo buon viaggio");
+                                    System.exit(0);
+                                } else {
+                                    System.out.println("Il tuo abbonamento è scaduto, vuoi rinnovarlo?");
+                                    String choiceRinnovo = scanner.nextLine().toLowerCase();
+                                    if (choiceRinnovo.equalsIgnoreCase("si")) {
+                                        int codiceUnicoAbbonamento = tesseraDAO.trovaNumeroAbbonamentoByCodiceTessera(numeroTessera);
+                                        while (true) {
+                                            System.out.println("Che abbonamento vuoi?" +
+                                                    "\n1) MENSILE" +
+                                                    "\n2) SETTIMANALE");
+                                            int sceltaTipoAbbonamento;
+                                            if (scanner.hasNextInt()) {
+                                                sceltaTipoAbbonamento = Integer.parseInt(scanner.nextLine());
+                                                if (sceltaTipoAbbonamento == 1 || sceltaTipoAbbonamento == 2) {
+                                                    switch (sceltaTipoAbbonamento) {
+                                                        case 1 ->
+                                                                abbonamentoDAO.rinnovoAbbonamento(codiceUnicoAbbonamento, TipoAbbonamento.MENSILE);
+                                                        case 2 ->
+                                                                abbonamentoDAO.rinnovoAbbonamento(codiceUnicoAbbonamento, TipoAbbonamento.SETTIMANALE);
+                                                    }
+                                                    System.out.println("Ti auguriamo un piacevole viaggio, alla prossima");
+                                                    System.exit(0);
+                                                } else {
+                                                    System.out.println("Valore non valido");
+                                                }
+                                            } else {
+                                                System.out.println("Valore non valido");
+                                            }
+                                        }
+                                    } else {
+                                        System.out.println("Vuoi acquistare singoli biglietti?");
+                                        String choiceAcquisto = scanner.nextLine();
+                                        while (true) {
+                                            if (choiceAcquisto.equalsIgnoreCase("si") || choiceAcquisto.equalsIgnoreCase("no")) {
+                                                CreazioneBiglietti.vendita(choiceAcquisto, trattaDAO, percorrenzaDAO, puntoEmissioneDAO, singoloBigliettoDAO, puntoScelto);
+                                                break;
+                                            } else System.out.println("Valore non valido");
                                         }
                                     }
                                 }

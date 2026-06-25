@@ -1,10 +1,12 @@
 package DAO;
 
+import entities.Abbonamento;
 import entities.Tessera;
 import entities.Utente;
 import exception.NotFoundException;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.TypedQuery;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -97,5 +99,12 @@ public class TesseraDAO {
         transaction.commit();
         System.out.println("nuova tessera creata: " + nuovaTessera.getCodiceTessera());
         return nuovaTessera;
+    }
+
+    public int trovaNumeroAbbonamentoByCodiceTessera(long codiceTessera) {
+//        SELECT p FROM Percorrenza p JOIN FETCH p.mezzo JOIN FETCH p.tratta t WHERE t = :tratta
+        TypedQuery<Abbonamento> query = em.createQuery("SELECT a FROM Abbonamento a JOIN FETCH a.tessera t WHERE t.codiceTessera = :codiceTessera ", Abbonamento.class);
+        query.setParameter("codiceTessera", codiceTessera);
+        return query.getSingleResult().getCodiceUnico();
     }
 }
