@@ -80,19 +80,20 @@ public class ApplicationProva {
         SingoloBiglietto b2 = new SingoloBiglietto(LocalDate.now(), m2, da2);
         SingoloBiglietto b3 = new SingoloBiglietto(LocalDate.now(), m3, ra1);
 
-        Tessera t1FromDB = tesseraDAO.findByCodiceTessera("7103439486469225740");
-        Tessera t2FromDB = tesseraDAO.findByCodiceTessera("1587270423070119018");
-        Tessera t3FromDB = tesseraDAO.findByCodiceTessera("7211449860680267463");
+        Tessera t1FromDB = tesseraDAO.findByCodiceTessera(7103439486469225740L);
+        Tessera t2FromDB = tesseraDAO.findByCodiceTessera(1587270423070119018L);
+        Tessera t3FromDB = tesseraDAO.findByCodiceTessera(7211449860680267463L);
 
         Abbonamento a1 = new Abbonamento(peFromDB1, TipoAbbonamento.MENSILE, t1FromDB);
         Abbonamento a2 = new Abbonamento(peFromDB2, TipoAbbonamento.SETTIMANALE, t2FromDB);
         Abbonamento a3 = new Abbonamento(peFromDB3, TipoAbbonamento.MENSILE, t3FromDB);
 
 
-//        percorrenzaDAO.percorrenzeAttive().forEach(System.out::println);
+       percorrenzaDAO.percorrenzeAttive().forEach(System.out::println);
         percorrenzaDAO.NumPercorrenzeTratta("4d028197-c8b0-4ed0-9d53-074c6dd4268b");
-//        abbonamentoDAO.rinnovoAbbonamento(1821095931, TipoAbbonamento.MENSILE);
-//        abbonamentoDAO.scadenzaAbbonamento(1821095931);
+      abbonamentoDAO.rinnovoAbbonamento(1821095931, TipoAbbonamento.MENSILE);
+        abbonamentoDAO.scadenzaAbbonamento(1821095931);
+
 
 //        statoMezzoDAO.save(sM1);
 //        statoMezzoDAO.save(sM2);
@@ -121,6 +122,8 @@ public class ApplicationProva {
 //        mezzoDAO.save(m2);
 //        mezzoDAO.save(m3);
 //        System.out.println("salvato");
+
+
     }
 }
 

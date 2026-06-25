@@ -22,7 +22,7 @@ public class Utente {
     private LocalDate dataDiNascita;
 
     @OneToOne
-    @JoinColumn(name = "id_tessera", nullable = false)
+    @JoinColumn(name = "id_tessera")
     private Tessera tessera;
 
     public Utente() {
