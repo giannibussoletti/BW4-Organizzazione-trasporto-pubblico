@@ -59,4 +59,29 @@ public class AbbonamentoDAO {
 
 
     }
+    public boolean isAbbonamentoValidoByCodiceTessera(long codiceTessera) {
+        TypedQuery<Abbonamento> query = entityManager.createQuery(
+                "SELECT a FROM Abbonamento a " +
+                        "WHERE a.tessera.codiceTessera = :codice " +
+                        "ORDER BY a.dataScadenza DESC",
+                Abbonamento.class
+        );
+        query.setParameter("codice", codiceTessera);
+        Abbonamento abbonamento = null;
+        try {
+            abbonamento = query.getSingleResult();
+        } catch (Exception e) {
+            System.out.println("nessun abbonamento trovato per la tessera " + codiceTessera);
+            return false;
+        }
+        boolean valido = !abbonamento.getDataScadenza().isBefore(LocalDate.now());
+        if (valido)
+            System.out.println("abbonamento e valido fino al " + abbonamento.getDataScadenza());
+        else
+            System.out.println("abbonamento e scaduto il " + abbonamento.getDataScadenza());
+
+        return valido;
+    }
+
+
 }

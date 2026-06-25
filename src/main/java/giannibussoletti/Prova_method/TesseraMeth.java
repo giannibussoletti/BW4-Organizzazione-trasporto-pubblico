@@ -1,5 +1,6 @@
 package giannibussoletti.Prova_method;
 
+import DAO.AbbonamentoDAO;
 import DAO.TesseraDAO;
 import DAO.UtenteDAO;
 import entities.Tessera;
@@ -14,6 +15,7 @@ public class TesseraMeth {
 
         TesseraDAO tesseraDAO = new TesseraDAO(em);
         UtenteDAO utenteDAO = new UtenteDAO(em);
+        AbbonamentoDAO abbonamentoDAO=new AbbonamentoDAO(em);
 
         //   2. findById
         Tessera tById = tesseraDAO.findById("35e67b0c-30b3-405b-bb52-26f24591f987");
@@ -35,4 +37,7 @@ public class TesseraMeth {
 
         Utente uConTessera = utenteDAO.findById("17d9b3e2-abb2-41d8-851d-352d64cfad65");
         tesseraDAO.creaTesseraSeNonEsiste(uConTessera);
+
+        boolean abbonamentoValido = abbonamentoDAO.isAbbonamentoValidoByCodiceTessera(8600756319471574059L);
+        System.out.println(abbonamentoValido);
     }}
