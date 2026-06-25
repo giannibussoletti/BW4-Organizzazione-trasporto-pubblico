@@ -1,6 +1,7 @@
 package DAO;
 
 import entities.Percorrenza;
+import entities.Tratta;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.TypedQuery;
@@ -71,6 +72,12 @@ public class PercorrenzaDAO {
         }
 
 
+    }
+
+    public List<Percorrenza> findMezzoPerTratta(Tratta tratta) {
+        TypedQuery<Percorrenza> query = entityManager.createQuery("SELECT p FROM Percorrenza p JOIN FETCH p.mezzo JOIN FETCH p.tratta t WHERE t = :tratta", Percorrenza.class);
+        query.setParameter("tratta", tratta);
+        return query.getResultList();
     }
 
 

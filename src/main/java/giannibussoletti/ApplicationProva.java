@@ -77,9 +77,9 @@ public class ApplicationProva {
         Percorrenza p2 = new Percorrenza(LocalTime.of(9, 0), tr3FromDB, m2FromDB);
         Percorrenza p3 = new Percorrenza(LocalTime.of(7, 30), tr3FromDB, m2FromDB);
 
-        SingoloBiglietto b1 = new SingoloBiglietto(LocalDate.now(), m1, da1);
-        SingoloBiglietto b2 = new SingoloBiglietto(LocalDate.now(), m2, da2);
-        SingoloBiglietto b3 = new SingoloBiglietto(LocalDate.now(), m3, ra1);
+//        SingoloBiglietto b1 = new SingoloBiglietto(LocalDate.now(), m1, da1);
+//        SingoloBiglietto b2 = new SingoloBiglietto(LocalDate.now(), m2, da2);
+//        SingoloBiglietto b3 = new SingoloBiglietto(LocalDate.now(), m3, ra1);
 
         Tessera t1FromDB = tesseraDAO.findByCodiceTessera(7103439486469225740L);
         Tessera t2FromDB = tesseraDAO.findByCodiceTessera(1587270423070119018L);
@@ -95,7 +95,7 @@ public class ApplicationProva {
 //        abbonamentoDAO.rinnovoAbbonamento(1821095931, TipoAbbonamento.MENSILE);
 //        abbonamentoDAO.scadenzaAbbonamento(1821095931);
 //        percorrenzaDAO.differenzaTempoPercorrenza("4d028197-c8b0-4ed0-9d53-074c6dd4268b");
-        Acquisizione.BigliettiEAbbonamenti(tesseraDAO, utenteDAO);
+        Acquisizione.BigliettiEAbbonamenti(tesseraDAO, utenteDAO, bigliettoDAO, trattaDAO, percorrenzaDAO, puntoEmissioneDAO);
 
 //        statoMezzoDAO.save(sM1);
 //        statoMezzoDAO.save(sM2);

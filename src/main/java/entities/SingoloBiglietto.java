@@ -17,7 +17,7 @@ public class SingoloBiglietto {
     private UUID idBiglietto;
 
     @Column(name = "date_issue", nullable = false)
-    private LocalDate dataEmissione;
+    private LocalDate dataEmissione = LocalDate.now();
 
     @Column(name = "date_certification")
     private LocalDate dataVidimazione;
@@ -36,11 +36,9 @@ public class SingoloBiglietto {
     protected SingoloBiglietto() {
     }
 
-    public SingoloBiglietto(LocalDate dataEmissione, Mezzo id_mezzo, PuntoEmissione id_punto_emissione) {
+    public SingoloBiglietto(Mezzo id_mezzo, PuntoEmissione id_punto_emissione) {
         Random r = new Random();
         this.codiceUnico = Math.abs(r.nextInt());
-        this.dataEmissione = dataEmissione;
-        this.dataVidimazione = dataVidimazione;
         this.id_mezzo = id_mezzo;
         this.id_punto_emissione = id_punto_emissione;
 
