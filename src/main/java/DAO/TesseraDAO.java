@@ -30,12 +30,12 @@ public class TesseraDAO {
         if (found == null) throw new NotFoundException(id);
         return found;
     }
-    public Tessera findByCodiceTessera(String codiceTessera) {
+    public Tessera findByCodiceTessera(long codiceTessera) {
         Tessera found = em.createQuery(
                         "SELECT t FROM Tessera t WHERE t.codiceTessera = :codice", Tessera.class)
                 .setParameter("codice", codiceTessera)
                 .getSingleResult();
-        if (found == null) throw new NotFoundException(codiceTessera);
+        if (found == null) throw new NotFoundException(String.valueOf(codiceTessera));
         return found;
     }
     public Tessera findByUtente(String idUtente) {
@@ -46,7 +46,7 @@ public class TesseraDAO {
         if (found == null) throw new NotFoundException(idUtente);
         return found;
     }
-    public boolean isAbbonamentoValido(String codiceTessera) {
+    public boolean isAbbonamentoValido(long codiceTessera) {
         Tessera tessera = findByCodiceTessera(codiceTessera);
         LocalDate oggi = LocalDate.now();
         return !tessera.getDataDiRinnovo().isBefore(oggi);
@@ -59,7 +59,7 @@ public class TesseraDAO {
         transaction.commit();
         System.out.println("La tessera con id " + id + " e stata eliminata correttamente");
     }
-    public void rinnova(String codiceTessera) {
+    public void rinnova(long codiceTessera) {
         Tessera tessera = findByCodiceTessera(codiceTessera);
         EntityTransaction transaction = em.getTransaction();
         transaction.begin();
@@ -67,5 +67,28 @@ public class TesseraDAO {
         em.merge(tessera);
         transaction.commit();
         System.out.println("La tessera " + codiceTessera + " e stata rinnovata fino al " + tessera.getDataDiRinnovo());
+    }
+    public Tessera creaTesseraSeNonEsiste(Utente utente) {
+        List<Tessera> risultati = em.createQuery(
+                        "SELECT t FROM Tessera t WHERE t.utente = :utente", Tessera.class)
+                .setParameter("utente", utente)
+                .getResultList();
+
+        if (!risultati.isEmpty()) {
+            Tessera tessera = risultati.get(0);
+            System.out.println("tessera gia esistente " + tessera.getCodiceTessera());
+            if (!isAbbonamentoValido(tessera.getCodiceTessera())) {
+                System.out.println("Tessera scaduta, rinnovo in corso");
+                rinnova(tessera.getCodiceTessera());
+            }
+            return tessera;
+        }
+        Tessera nuovaTessera = new Tessera(LocalDate.now(), LocalDate.now().plusYears(1));
+        EntityTransaction transaction = em.getTransaction();
+        transaction.begin();
+        em.persist(nuovaTessera);
+        transaction.commit();
+        System.out.println("nuova tessera creata: " + nuovaTessera.getCodiceTessera());
+        return nuovaTessera;
     }
     }
