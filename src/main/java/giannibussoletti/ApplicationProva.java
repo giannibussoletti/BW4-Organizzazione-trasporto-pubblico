@@ -6,6 +6,7 @@ import enums.StatoMezzo;
 import enums.TipoAbbonamento;
 import enums.TipoMezzo;
 
+import gianniScanner.Acquisizione;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
@@ -34,9 +35,9 @@ public class ApplicationProva {
         StatoMezzoDAO statoMezzoDAO = new StatoMezzoDAO(em);
 
 
-        Tessera t1 = new Tessera(LocalDate.now(), LocalDate.now().plusYears(1));
-        Tessera t2 = new Tessera(LocalDate.now(), LocalDate.now().plusYears(1));
-        Tessera t3 = new Tessera(LocalDate.now(), LocalDate.now().plusYears(1));
+        Tessera t1 = new Tessera();
+        Tessera t2 = new Tessera();
+        Tessera t3 = new Tessera();
 
 
         Utente u1 = new Utente("Mario", "Rossi", LocalDate.of(1990, 5, 12), t1);
@@ -93,7 +94,8 @@ public class ApplicationProva {
 //        percorrenzaDAO.numPercorrenzeTratta("4d028197-c8b0-4ed0-9d53-074c6dd4268b");
 //        abbonamentoDAO.rinnovoAbbonamento(1821095931, TipoAbbonamento.MENSILE);
 //        abbonamentoDAO.scadenzaAbbonamento(1821095931);
-        percorrenzaDAO.differenzaTempoPercorrenza("4d028197-c8b0-4ed0-9d53-074c6dd4268b");
+//        percorrenzaDAO.differenzaTempoPercorrenza("4d028197-c8b0-4ed0-9d53-074c6dd4268b");
+        Acquisizione.BigliettiEAbbonamenti(tesseraDAO, utenteDAO);
 
 //        statoMezzoDAO.save(sM1);
 //        statoMezzoDAO.save(sM2);

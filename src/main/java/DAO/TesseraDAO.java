@@ -25,11 +25,13 @@ public class TesseraDAO {
         transaction.commit();
         System.out.println("La tessera " + nuovaTessera + " e stata salvata correttamente");
     }
+
     public Tessera findById(String id) {
         Tessera found = em.find(Tessera.class, UUID.fromString(id));
         if (found == null) throw new NotFoundException(id);
         return found;
     }
+
     public Tessera findByCodiceTessera(long codiceTessera) {
         Tessera found = em.createQuery(
                         "SELECT t FROM Tessera t WHERE t.codiceTessera = :codice", Tessera.class)
@@ -38,6 +40,7 @@ public class TesseraDAO {
         if (found == null) throw new NotFoundException(String.valueOf(codiceTessera));
         return found;
     }
+
     public Tessera findByUtente(String idUtente) {
         Tessera found = em.createQuery(
                         "SELECT t FROM Tessera t WHERE t.utente.id = :idUtente", Tessera.class)
@@ -46,11 +49,13 @@ public class TesseraDAO {
         if (found == null) throw new NotFoundException(idUtente);
         return found;
     }
+
     public boolean isAbbonamentoValido(long codiceTessera) {
         Tessera tessera = findByCodiceTessera(codiceTessera);
         LocalDate oggi = LocalDate.now();
         return !tessera.getDataDiRinnovo().isBefore(oggi);
     }
+
     public void delete(String id) {
         Tessera found = findById(id);
         EntityTransaction transaction = em.getTransaction();
@@ -59,6 +64,7 @@ public class TesseraDAO {
         transaction.commit();
         System.out.println("La tessera con id " + id + " e stata eliminata correttamente");
     }
+
     public void rinnova(long codiceTessera) {
         Tessera tessera = findByCodiceTessera(codiceTessera);
         EntityTransaction transaction = em.getTransaction();
@@ -68,6 +74,7 @@ public class TesseraDAO {
         transaction.commit();
         System.out.println("La tessera " + codiceTessera + " e stata rinnovata fino al " + tessera.getDataDiRinnovo());
     }
+
     public Tessera creaTesseraSeNonEsiste(Utente utente) {
         List<Tessera> risultati = em.createQuery(
                         "SELECT t FROM Tessera t WHERE t.utente = :utente", Tessera.class)
@@ -83,7 +90,7 @@ public class TesseraDAO {
             }
             return tessera;
         }
-        Tessera nuovaTessera = new Tessera(LocalDate.now(), LocalDate.now().plusYears(1));
+        Tessera nuovaTessera = new Tessera();
         EntityTransaction transaction = em.getTransaction();
         transaction.begin();
         em.persist(nuovaTessera);
@@ -91,4 +98,4 @@ public class TesseraDAO {
         System.out.println("nuova tessera creata: " + nuovaTessera.getCodiceTessera());
         return nuovaTessera;
     }
-    }
+}

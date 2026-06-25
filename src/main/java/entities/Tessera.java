@@ -29,14 +29,12 @@ public class Tessera {
 
 
     public Tessera() {
-    }
-
-    public Tessera(LocalDate dataEmissione, LocalDate dataDiRinnovo) {
         Random r = new Random();
         this.codiceTessera = Math.abs(r.nextLong());
-        this.dataEmissione = dataEmissione;
-        this.dataDiRinnovo = dataDiRinnovo;
+        this.dataEmissione = LocalDate.now();
+        this.dataDiRinnovo = LocalDate.now().plusYears(1);
     }
+
 
     public UUID getId() {
         return id;
