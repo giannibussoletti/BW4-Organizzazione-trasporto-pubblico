@@ -89,11 +89,11 @@ public class ApplicationProva {
         Abbonamento a3 = new Abbonamento(peFromDB3, TipoAbbonamento.MENSILE, t3FromDB);
 
 
-       percorrenzaDAO.percorrenzeAttive().forEach(System.out::println);
-        percorrenzaDAO.NumPercorrenzeTratta("4d028197-c8b0-4ed0-9d53-074c6dd4268b");
-      abbonamentoDAO.rinnovoAbbonamento(1821095931, TipoAbbonamento.MENSILE);
-        abbonamentoDAO.scadenzaAbbonamento(1821095931);
-
+//        percorrenzaDAO.percorrenzeAttive().forEach(System.out::println);
+//        percorrenzaDAO.numPercorrenzeTratta("4d028197-c8b0-4ed0-9d53-074c6dd4268b");
+//        abbonamentoDAO.rinnovoAbbonamento(1821095931, TipoAbbonamento.MENSILE);
+//        abbonamentoDAO.scadenzaAbbonamento(1821095931);
+        percorrenzaDAO.differenzaTempoPercorrenza("4d028197-c8b0-4ed0-9d53-074c6dd4268b");
 
 //        statoMezzoDAO.save(sM1);
 //        statoMezzoDAO.save(sM2);
