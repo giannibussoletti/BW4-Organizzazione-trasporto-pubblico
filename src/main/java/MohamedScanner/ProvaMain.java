@@ -12,6 +12,7 @@ import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 
 import java.util.Scanner;
+import java.util.UUID;
 
 public class ProvaMain {
 
@@ -71,7 +72,7 @@ public class ProvaMain {
 
             switch (scelta) {
                 case 1 -> System.out.println("h");
-                case 2 -> System.out.println("h");
+                case 2 -> vidimaBiglietto();
                 case 0 -> b = true;
                 default -> System.out.println("Scelta non valida");
             }
@@ -129,4 +130,17 @@ public class ProvaMain {
 
         System.out.println("abbonamento acquistato con successo");
     }
+    private static void vidimaBiglietto() {
+        System.out.println("inserisci l'ID del biglietto da vidimare");
+        String id = scanner.nextLine();
+
+        try {
+            UUID uuid = UUID.fromString(id);
+            SingoloBigliettoDAO bigliettoDAO = new SingoloBigliettoDAO(em);
+            bigliettoDAO.vidima(uuid);
+        } catch (IllegalArgumentException e) {
+            System.out.println("formato ID non valido\n Assicurati di inserire un UUID corretto");
+        }
+    }
+
 }

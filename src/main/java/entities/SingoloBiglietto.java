@@ -1,12 +1,11 @@
 package entities;
 
 import jakarta.persistence.*;
-
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Random;
 import java.util.UUID;
 
-//Paolo
 @Entity
 @Table(name = "single_ticket")
 public class SingoloBiglietto {
@@ -19,8 +18,8 @@ public class SingoloBiglietto {
     @Column(name = "date_issue", nullable = false)
     private LocalDate dataEmissione = LocalDate.now();
 
-    @Column(name = "date_certification")
-    private LocalDate dataVidimazione;
+    @Column(name = "date_vidimazione")
+    private LocalDateTime dataVidimazione;
 
     @Column(name = "single_code")
     private int codiceUnico;
@@ -41,11 +40,10 @@ public class SingoloBiglietto {
         this.codiceUnico = Math.abs(r.nextInt());
         this.id_mezzo = id_mezzo;
         this.id_punto_emissione = id_punto_emissione;
-
     }
 
+    // ===== GETTERS & SETTERS =====
 
-    //============= GETTERS ==================//
     public UUID getIdBiglietto() {
         return idBiglietto;
     }
@@ -54,15 +52,28 @@ public class SingoloBiglietto {
         return dataEmissione;
     }
 
-    public LocalDate getDataVidimazione() {
+    public LocalDateTime getDataVidimazione() {
         return dataVidimazione;
+    }
+
+    public void setDataVidimazione(LocalDateTime dataVidimazione) {
+        this.dataVidimazione = dataVidimazione;
     }
 
     public int getCodiceUnico() {
         return codiceUnico;
     }
 
-    //============= TOSTRING ==================//
+    public Mezzo getId_mezzo() {
+        return id_mezzo;
+    }
+
+    public PuntoEmissione getId_punto_emissione() {
+        return id_punto_emissione;
+    }
+
+    // ===== TO STRING =====
+
     @Override
     public String toString() {
         return "SingoloBiglietto{" +

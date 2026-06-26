@@ -6,6 +6,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.TypedQuery;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 //Paolo
@@ -102,5 +103,30 @@ public class SingoloBigliettoDAO {
 
         return query.getSingleResult();
     }
+    public void vidima(UUID idBiglietto) {
+        EntityTransaction t = entityManager.getTransaction();
+        t.begin();
+
+        SingoloBiglietto b = entityManager.find(SingoloBiglietto.class, idBiglietto);
+
+        if (b == null) {
+            System.out.println("Biglietto non trovato");
+            t.rollback();
+            return;
+        }
+
+        if (b.getDataVidimazione() != null) {
+            System.out.println("il biglietto è già stato vidimato il " + b.getDataVidimazione());
+            t.rollback();
+            return;
+        }
+
+        b.setDataVidimazione(LocalDateTime.now());
+        entityManager.merge(b);
+
+        t.commit();
+        System.out.println("biglietto vidimato correttamente alle " + b.getDataVidimazione());
+    }
+
 
 }
