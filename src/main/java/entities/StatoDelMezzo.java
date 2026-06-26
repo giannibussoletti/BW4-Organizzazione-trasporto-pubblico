@@ -6,7 +6,6 @@ import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.util.UUID;
 
-//Paolo
 @Entity
 @Table(name = "stato_del_mezzo")
 public class StatoDelMezzo {
@@ -29,15 +28,13 @@ public class StatoDelMezzo {
     @JoinColumn(name = "id_mezzo", nullable = false)
     private Mezzo idMezzo;
 
-    protected StatoDelMezzo() {
-    }
+    protected StatoDelMezzo() {}
 
     public StatoDelMezzo(StatoMezzo type, LocalDate dataInizio, Mezzo idMezzo) {
         this.type = type;
         this.dataInizio = dataInizio;
         this.idMezzo = idMezzo;
     }
-    //============= GETTERS ==================//
 
     public UUID getId() {
         return id;
@@ -58,9 +55,6 @@ public class StatoDelMezzo {
     public Mezzo getIdMezzo() {
         return idMezzo;
     }
-
-//============= TOSTRING ==================//
-
 
     @Override
     public String toString() {

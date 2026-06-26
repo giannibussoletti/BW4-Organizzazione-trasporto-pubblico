@@ -1,12 +1,11 @@
 package giannibussoletti;
 
 import DAO.*;
+import SCANNER.Acquisizione;
 import entities.*;
 import enums.StatoMezzo;
-import enums.TipoAbbonamento;
 import enums.TipoMezzo;
 
-import gianniScanner.Acquisizione;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
@@ -49,9 +48,9 @@ public class ApplicationProva {
         DistributoreAutomatico da2 = new DistributoreAutomatico("Via Milano 22", false);
         RivenditoreAutorizzato ra1 = new RivenditoreAutorizzato("Via Verdi 33", "Tabacchi SRL", "Tabaccheria Centrale");
 
-        PuntoEmissione peFromDB1 = puntoEmissioneDAO.findByID("6d96ab5a-eaff-48af-a058-9c9acaefe934");
-        PuntoEmissione peFromDB2 = puntoEmissioneDAO.findByID("f0f13036-a21d-4e71-b38a-29ebcbb4a11e");
-        PuntoEmissione peFromDB3 = puntoEmissioneDAO.findByID("f971e05d-7fba-4165-a2b5-241a8712870f");
+//        PuntoEmissione peFromDB1 = puntoEmissioneDAO.findByID("6d96ab5a-eaff-48af-a058-9c9acaefe934");
+//        PuntoEmissione peFromDB2 = puntoEmissioneDAO.findByID("f0f13036-a21d-4e71-b38a-29ebcbb4a11e");
+//        PuntoEmissione peFromDB3 = puntoEmissioneDAO.findByID("f971e05d-7fba-4165-a2b5-241a8712870f");
 
         Mezzo m1 = new Mezzo(TipoMezzo.AUTOBUS, 50, "AB123CD");
         Mezzo m2 = new Mezzo(TipoMezzo.TRAM, 120, "TRM567");
@@ -85,9 +84,9 @@ public class ApplicationProva {
         Tessera t2FromDB = tesseraDAO.findByCodiceTessera(1587270423070119018L);
         Tessera t3FromDB = tesseraDAO.findByCodiceTessera(7211449860680267463L);
 
-        Abbonamento a1 = new Abbonamento(peFromDB1, TipoAbbonamento.MENSILE, t1FromDB);
-        Abbonamento a2 = new Abbonamento(peFromDB2, TipoAbbonamento.SETTIMANALE, t2FromDB);
-        Abbonamento a3 = new Abbonamento(peFromDB3, TipoAbbonamento.MENSILE, t3FromDB);
+//        Abbonamento a1 = new Abbonamento(peFromDB1, TipoAbbonamento.MENSILE, t1FromDB);
+//        Abbonamento a2 = new Abbonamento(peFromDB2, TipoAbbonamento.SETTIMANALE, t2FromDB);
+//        Abbonamento a3 = new Abbonamento(peFromDB3, TipoAbbonamento.MENSILE, t3FromDB);
 
 
 //        percorrenzaDAO.percorrenzeAttive().forEach(System.out::println);

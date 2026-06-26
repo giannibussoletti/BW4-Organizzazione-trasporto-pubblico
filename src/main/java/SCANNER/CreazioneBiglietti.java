@@ -1,4 +1,4 @@
-package gianniScanner;
+package SCANNER;
 
 import DAO.PercorrenzaDAO;
 import DAO.PuntoEmissioneDAO;

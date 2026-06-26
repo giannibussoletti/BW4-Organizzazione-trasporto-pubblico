@@ -1,5 +1,6 @@
 package DAO;
 
+import entities.Mezzo;
 import entities.SingoloBiglietto;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
@@ -58,26 +59,36 @@ public class SingoloBigliettoDAO {
         }
     }
 
-    public long getBigliettiVidimatiPerMezzoInPeriodo(entities.Mezzo mezzo, java.time.LocalDate inizio, java.time.LocalDate fine) {
+    public long getBigliettiVidimatiPerMezzoInPeriodo(Mezzo mezzo, LocalDateTime inizio, LocalDateTime fine) {
         TypedQuery<Long> query = entityManager.createQuery(
-                "SELECT COUNT(b) FROM SingoloBiglietto b WHERE b.id_mezzo = :mezzo AND b.dataVidimazione BETWEEN :inizio AND :fine",
+                "SELECT COUNT(b) FROM SingoloBiglietto b " +
+                        "WHERE b.id_mezzo = :mezzo " +
+                        "AND b.dataVidimazione BETWEEN :inizio AND :fine",
                 Long.class
         );
+
         query.setParameter("mezzo", mezzo);
         query.setParameter("inizio", inizio);
         query.setParameter("fine", fine);
+
         return query.getSingleResult();
     }
 
-    public long getBigliettiVidimatiTotaliInPeriodo(java.time.LocalDate inizio, java.time.LocalDate fine) {
+
+
+    public long getBigliettiVidimatiTotaliInPeriodo(LocalDateTime inizio, LocalDateTime fine) {
         TypedQuery<Long> query = entityManager.createQuery(
-                "SELECT COUNT(b) FROM SingoloBiglietto b WHERE b.dataVidimazione BETWEEN :inizio AND :fine",
+                "SELECT COUNT(b) FROM SingoloBiglietto b " +
+                        "WHERE b.dataVidimazione BETWEEN :inizio AND :fine",
                 Long.class
         );
+
         query.setParameter("inizio", inizio);
         query.setParameter("fine", fine);
+
         return query.getSingleResult();
     }
+
 
     public void vidima(UUID idBiglietto) {
         EntityTransaction t = entityManager.getTransaction();

@@ -1,7 +1,5 @@
 package entities;
 
-
-import enums.StatoMezzo;
 import enums.TipoMezzo;
 import jakarta.persistence.*;
 
@@ -12,6 +10,7 @@ import java.util.UUID;
 @Entity
 @Table(name = "mezzo")
 public class Mezzo {
+
     @Id
     @GeneratedValue
     @Column(name = "id_mezzo", nullable = false)
@@ -30,16 +29,13 @@ public class Mezzo {
     @OneToMany(mappedBy = "idMezzo", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<StatoDelMezzo> periodiStato = new ArrayList<>();
 
-    protected Mezzo() {
-    }
+    protected Mezzo() {}
 
     public Mezzo(TipoMezzo tipoMezzo, int capienza, String targaVeicolo) {
         this.tipoMezzo = tipoMezzo;
         this.capienza = capienza;
         this.targaVeicolo = targaVeicolo;
     }
-
-    //============= GETTERS ==================//
 
     public UUID getId() {
         return id;
@@ -60,15 +56,14 @@ public class Mezzo {
     public List<StatoDelMezzo> getPeriodiStato() {
         return periodiStato;
     }
-    //============= SETTERS ==================//
+
+    public List<StatoDelMezzo> getManutenzioni() {
+        return periodiStato;
+    }
 
     public void setCapienza(int capienza) {
         this.capienza = capienza;
     }
-
-
-    //============= TOSTRING ==================//
-
 
     @Override
     public String toString() {

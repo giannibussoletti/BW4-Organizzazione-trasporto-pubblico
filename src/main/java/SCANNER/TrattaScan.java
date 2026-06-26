@@ -1,4 +1,4 @@
-package MohamedScanner;
+package SCANNER;
 
 import DAO.TrattaDAO;
 import entities.Tratta;

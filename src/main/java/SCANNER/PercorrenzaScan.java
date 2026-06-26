@@ -1,4 +1,4 @@
-package MohamedScanner;
+package SCANNER;
 
 import DAO.MezzoDAO;
 import DAO.PercorrenzaDAO;

@@ -1,13 +1,7 @@
-package MohamedScanner;
+package SCANNER;
 
 import DAO.*;
-import SCANNER.MezzoScanner;
-import SCANNER.StatoDelMezzoScanner;
-import entities.DistributoreAutomatico;
-import entities.PuntoEmissione;
-import entities.Tessera;
-import enums.TipoAbbonamento;
-import gianniScanner.Acquisizione;
+
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
@@ -22,6 +16,7 @@ public class ProvaMain {
     public static final EntityManagerFactory emf =
             Persistence.createEntityManagerFactory("bw4traspublicpu");
     public static final EntityManager em = emf.createEntityManager();
+
     private static final AbbonamentoDAO abbonamentoDAO = new AbbonamentoDAO(em);
     private static final TrattaDAO trattaDAO = new TrattaDAO(em);
     private static final PercorrenzaDAO percorrenzaDAO = new PercorrenzaDAO(em);
@@ -35,6 +30,8 @@ public class ProvaMain {
     private static final UtenteDAO utenteDAO = new UtenteDAO(em);
     private static final PuntoEmissioneDAO puntoEmissioneDAO = new PuntoEmissioneDAO(em);
     private static final SingoloBigliettoDAO bigliettoDAO = new SingoloBigliettoDAO(em);
+
+    private static final AdminScanner adminScanner = new AdminScanner(em);
 
     public static void main(String[] args) {
 
@@ -95,6 +92,7 @@ public class ProvaMain {
             System.out.println("2) Gestione Stato Mezzi");
             System.out.println("3) Gestione Tratte");
             System.out.println("4) Gestione Percorrenze");
+            System.out.println("5) Statistiche Amministratore");
             System.out.println("0) Torna indietro");
             System.out.print("Scelta: ");
 
@@ -106,37 +104,13 @@ public class ProvaMain {
                 case 2 -> statoScanner.start();
                 case 3 -> trattaScanner.start();
                 case 4 -> percorrenzaScanner.start();
+                case 5 -> adminScanner.start();
                 case 0 -> b = true;
                 default -> System.out.println("Scelta non valida");
             }
         }
     }
 
-    private static void verificaAbbonamento() {
-        System.out.println("inserisci codice tessera");
-        long codice = Long.parseLong(scanner.nextLine());
-
-        boolean valido = abbonamentoDAO.isAbbonamentoValidoByCodiceTessera(codice);
-    }
-    private static void acquistaAbbonamento() {
-
-        System.out.println("Inserisci codice tessera");
-        long codice = Long.parseLong(scanner.nextLine());
-
-        Tessera tessera = new TesseraDAO(em).findByCodiceTessera(codice);
-        System.out.println("Tipo abbonamento:");
-        System.out.println("1) Settimanale");
-        System.out.println("2) Mensile");
-        int scelta = Integer.parseInt(scanner.nextLine());
-        TipoAbbonamento tipo =
-                scelta == 1 ? TipoAbbonamento.SETTIMANALE : TipoAbbonamento.MENSILE;
-
-        PuntoEmissione punto = new DistributoreAutomatico("Via Roma 10", true);
-
-        abbonamentoDAO.creaAbbonamento(punto, tipo, tessera);
-
-        System.out.println("abbonamento acquistato con successo");
-    }
     private static void vidimaBiglietto() {
         System.out.println("inserisci l'ID del biglietto da vidimare");
         String id = scanner.nextLine();
@@ -149,5 +123,4 @@ public class ProvaMain {
             System.out.println("formato ID non valido\n Assicurati di inserire un UUID corretto");
         }
     }
-
 }

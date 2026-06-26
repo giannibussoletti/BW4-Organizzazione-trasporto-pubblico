@@ -42,38 +42,37 @@ public class PercorrenzaDAO {
         return query.getResultList();
     }
 
-    public void numPercorrenzeTratta(String id_tratta) {
+    public long numPercorrenzeTratta(String id_tratta) {
         TypedQuery<Long> query = entityManager.createQuery(
-                "SELECT COUNT(p) FROM Percorrenza p WHERE p.tratta.id = :id_tratta",
+                "SELECT COUNT(p) FROM Percorrenza p JOIN p.tratta t WHERE t.id = :id_tratta",
                 Long.class
         );
+
         query.setParameter("id_tratta", UUID.fromString(id_tratta));
-        System.out.println(query.getSingleResult());
+
+        return query.getSingleResult();
     }
 
-    public void differenzaTempoPercorrenza(String id_tratta) {
-        TypedQuery<Percorrenza> query = entityManager.createQuery(
-                "SELECT p FROM Percorrenza p JOIN FETCH p.tratta t WHERE t.id = :id_tratta AND p.oraArrivo IS NOT NULL",
-                Percorrenza.class
-        );
-        query.setParameter("id_tratta", UUID.fromString(id_tratta));
 
-        for (Percorrenza p : query.getResultList()) {
-            long minutiTratta = p.getTratta().getTempoPercorrenza().getMinute();
-            long oreTratta = p.getTratta().getTempoPercorrenza().getHour();
-            long minutiTotaliTratta = (oreTratta * 60) + minutiTratta;
-            long minutiPercorrenza = ChronoUnit.MINUTES.between(p.getOraPartenza(), p.getOraArrivo());
-            long differenzaMinuti = minutiPercorrenza - minutiTotaliTratta;
+    public long differenzaTempoPercorrenza(String idPercorrenza) {
+        Percorrenza p = entityManager.find(Percorrenza.class, UUID.fromString(idPercorrenza));
 
-            System.out.println(
-                    "Il mezzo " + p.getMezzo().getTipoMezzo() +
-                            " con targa: " + p.getMezzo().getTargaVeicolo() +
-                            "\nÈ partito alle: " + p.getOraPartenza() +
-                            "\ned è arrivato alle: " + p.getOraArrivo() +
-                            "\nDifferenza: " + differenzaMinuti + " minuti\n"
-            );
+        if (p == null || p.getOraArrivo() == null || p.getOraPartenza() == null) {
+            return 0;
         }
+
+        long minutiPercorrenza = ChronoUnit.MINUTES.between(
+                p.getOraPartenza(),
+                p.getOraArrivo()
+        );
+
+        long minutiTratta = p.getTratta().getTempoPercorrenza().getMinute();
+        long oreTratta = p.getTratta().getTempoPercorrenza().getHour();
+        long minutiTotaliTratta = (oreTratta * 60) + minutiTratta;
+
+        return minutiPercorrenza - minutiTotaliTratta;
     }
+
 
     public List<Percorrenza> findMezzoPerTratta(Tratta tratta) {
         TypedQuery<Percorrenza> query = entityManager.createQuery(
