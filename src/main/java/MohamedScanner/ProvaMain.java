@@ -13,8 +13,11 @@ import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 
 import java.util.Scanner;
+import java.util.UUID;
 
 public class ProvaMain {
+
+    private static final Scanner scanner = new Scanner(System.in);
 
     public static final EntityManagerFactory emf =
             Persistence.createEntityManagerFactory("bw4traspublicpu");
@@ -32,7 +35,6 @@ public class ProvaMain {
     private static final UtenteDAO utenteDAO = new UtenteDAO(em);
     private static final PuntoEmissioneDAO puntoEmissioneDAO = new PuntoEmissioneDAO(em);
     private static final SingoloBigliettoDAO bigliettoDAO = new SingoloBigliettoDAO(em);
-    private static final Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
 
@@ -77,7 +79,7 @@ public class ProvaMain {
             switch (scelta) {
                 case 1 ->
                         Acquisizione.BigliettiEAbbonamenti(tesseraDAO, utenteDAO, bigliettoDAO, trattaDAO, percorrenzaDAO, puntoEmissioneDAO, abbonamentoDAO);
-                case 2 -> System.out.println("h");
+                case 2 -> vidimaBiglietto();
                 case 0 -> b = true;
                 default -> System.out.println("Scelta non valida");
             }
@@ -116,7 +118,6 @@ public class ProvaMain {
 
         boolean valido = abbonamentoDAO.isAbbonamentoValidoByCodiceTessera(codice);
     }
-
     private static void acquistaAbbonamento() {
 
         System.out.println("Inserisci codice tessera");
@@ -136,4 +137,17 @@ public class ProvaMain {
 
         System.out.println("abbonamento acquistato con successo");
     }
+    private static void vidimaBiglietto() {
+        System.out.println("inserisci l'ID del biglietto da vidimare");
+        String id = scanner.nextLine();
+
+        try {
+            UUID uuid = UUID.fromString(id);
+            SingoloBigliettoDAO bigliettoDAO = new SingoloBigliettoDAO(em);
+            bigliettoDAO.vidima(uuid);
+        } catch (IllegalArgumentException e) {
+            System.out.println("formato ID non valido\n Assicurati di inserire un UUID corretto");
+        }
+    }
+
 }

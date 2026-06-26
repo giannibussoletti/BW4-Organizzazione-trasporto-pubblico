@@ -25,7 +25,7 @@ public class StatoMezzoDAO {
     public StatoDelMezzo findById(String id) {
 
         TypedQuery<StatoDelMezzo> query = entityManager.createQuery(
-                "SELECT m FROM MezzoDiTrasporto m WHERE m.id = :id", StatoDelMezzo.class);
+                "SELECT m FROM StatoDelMezzo m WHERE m.id = :id", StatoDelMezzo.class);
         query.setParameter("id", UUID.fromString(id));
 
         return query.getSingleResult();

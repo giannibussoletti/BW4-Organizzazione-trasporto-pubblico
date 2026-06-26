@@ -26,7 +26,7 @@ public class StatoDelMezzoScanner {
         boolean running = true;
 
         while (running) {
-            System.out.println("\n===== GESTIONE STATO DEL MEZZO =====");
+            System.out.println("\nGESTIONE STATO DEL MEZZO");
             System.out.println("1. Assegna un nuovo Stato a un Mezzo (Save)");
             System.out.println("2. Cerca Stato tramite ID (Find By ID)");
             System.out.println("0. Esci");
@@ -52,7 +52,7 @@ public class StatoDelMezzoScanner {
     }
 
     private void gestisciSave() {
-        System.out.println("\n--- Nuovo Stato del Mezzo ---");
+        System.out.println("\nNuovo Stato del Mezzo");
 
         // 1. Recupero del Mezzo
         System.out.print("Inserisci l'UUID del Mezzo coinvolto: ");
@@ -112,7 +112,7 @@ public class StatoDelMezzoScanner {
     }
 
     private void gestisciFindById() {
-        System.out.println("\n--- Ricerca Stato ---");
+        System.out.println("\nRicerca Stato");
         System.out.print("Inserisci l'UUID dello Stato da cercare: ");
         String idStatoStr = scanner.nextLine();
 
