@@ -7,6 +7,7 @@ import entities.DistributoreAutomatico;
 import entities.PuntoEmissione;
 import entities.Tessera;
 import enums.TipoAbbonamento;
+import gianniScanner.Acquisizione;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
@@ -14,8 +15,6 @@ import jakarta.persistence.Persistence;
 import java.util.Scanner;
 
 public class ProvaMain {
-
-    private static final Scanner scanner = new Scanner(System.in);
 
     public static final EntityManagerFactory emf =
             Persistence.createEntityManagerFactory("bw4traspublicpu");
@@ -29,6 +28,11 @@ public class ProvaMain {
     private static final PercorrenzaScan percorrenzaScanner = new PercorrenzaScan(em);
     private static final MezzoScanner mezzoScanner = new MezzoScanner(em);
     private static final StatoDelMezzoScanner statoScanner = new StatoDelMezzoScanner(em);
+    private static final TesseraDAO tesseraDAO = new TesseraDAO(em);
+    private static final UtenteDAO utenteDAO = new UtenteDAO(em);
+    private static final PuntoEmissioneDAO puntoEmissioneDAO = new PuntoEmissioneDAO(em);
+    private static final SingoloBigliettoDAO bigliettoDAO = new SingoloBigliettoDAO(em);
+    private static final Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
 
@@ -56,6 +60,7 @@ public class ProvaMain {
         emf.close();
         System.out.println("Programma terminato");
     }
+
     private static void menuUtente() {
         boolean b = false;
 
@@ -70,7 +75,8 @@ public class ProvaMain {
             scanner.nextLine();
 
             switch (scelta) {
-                case 1 -> System.out.println("h");
+                case 1 ->
+                        Acquisizione.BigliettiEAbbonamenti(tesseraDAO, utenteDAO, bigliettoDAO, trattaDAO, percorrenzaDAO, puntoEmissioneDAO, abbonamentoDAO);
                 case 2 -> System.out.println("h");
                 case 0 -> b = true;
                 default -> System.out.println("Scelta non valida");
@@ -110,6 +116,7 @@ public class ProvaMain {
 
         boolean valido = abbonamentoDAO.isAbbonamentoValidoByCodiceTessera(codice);
     }
+
     private static void acquistaAbbonamento() {
 
         System.out.println("Inserisci codice tessera");

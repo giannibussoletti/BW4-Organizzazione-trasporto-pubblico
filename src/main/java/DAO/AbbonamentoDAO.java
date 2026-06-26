@@ -61,6 +61,7 @@ public class AbbonamentoDAO {
 
 
     }
+
     public boolean isAbbonamentoValidoByCodiceTessera(long codiceTessera) {
 
         TypedQuery<Abbonamento> query = entityManager.createQuery(
@@ -96,8 +97,6 @@ public class AbbonamentoDAO {
         System.out.println("Nuovo abbonamento creato \n Codice " + nuovo.getCodiceUnico());
         return nuovo;
     }
-
-
 
 
 }

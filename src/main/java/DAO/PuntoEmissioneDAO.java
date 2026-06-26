@@ -23,8 +23,6 @@ public class PuntoEmissioneDAO {
         this.entityManager.persist(newPuntoEmissione);
 
         transaction.commit();
-
-        System.out.println("Punto di emissione creato correttamente");
     }
 
     public PuntoEmissione findByID(String id) {
