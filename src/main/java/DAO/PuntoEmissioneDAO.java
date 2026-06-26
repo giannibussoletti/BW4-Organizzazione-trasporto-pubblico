@@ -16,20 +16,27 @@ public class PuntoEmissioneDAO {
     }
 
     public void save(PuntoEmissione newPuntoEmissione) {
-        EntityTransaction transaction = this.entityManager.getTransaction();
-
+        EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
-
-        this.entityManager.persist(newPuntoEmissione);
-
+        entityManager.persist(newPuntoEmissione);
         transaction.commit();
-
         System.out.println("Punto di emissione creato correttamente");
     }
 
-    public PuntoEmissione findByID(String id) {
-        TypedQuery<PuntoEmissione> query = entityManager.createQuery("SELECT p FROM PuntoEmissione p WHERE p.id = :id", PuntoEmissione.class);
+    public PuntoEmissione findById(String id) {
+        TypedQuery<PuntoEmissione> query = entityManager.createQuery(
+                "SELECT p FROM PuntoEmissione p WHERE p.id = :id",
+                PuntoEmissione.class
+        );
         query.setParameter("id", UUID.fromString(id));
         return query.getSingleResult();
     }
+
+    public void update(PuntoEmissione p) {
+        EntityTransaction t = entityManager.getTransaction();
+        t.begin();
+        entityManager.merge(p);
+        t.commit();
+    }
+
 }

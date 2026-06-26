@@ -10,6 +10,7 @@ import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 public class AbbonamentoDAO {
 
@@ -20,84 +21,56 @@ public class AbbonamentoDAO {
     }
 
     public void save(Abbonamento newAbbonamento) {
-        EntityTransaction transaction = this.entityManager.getTransaction();
-
+        EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
-
-        this.entityManager.persist(newAbbonamento);
-
+        entityManager.persist(newAbbonamento);
         transaction.commit();
-
         System.out.println("Nuovo Abbonamento salvato correttamente");
     }
 
+    public boolean isTesseraValida(String id) {
+        Abbonamento a = entityManager.find(Abbonamento.class, UUID.fromString(id));
+        if (a == null) return false;
+        return a.getDataScadenza().isAfter(LocalDate.now());
+    }
+
     public void rinnovoAbbonamento(int codiceUnico, TipoAbbonamento tipoAbbonamento) {
-        EntityTransaction transaction = this.entityManager.getTransaction();
-
+        EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
-
-        Query query = entityManager.createQuery("UPDATE Abbonamento a SET a.dataEmissione = :dataEmissione, a.dataScadenza = :dataScadenza, a.tipoAbbonamento = :tipoAbbonamento WHERE a.codiceUnico = :codiceUnico");
+        Query query = entityManager.createQuery(
+                "UPDATE Abbonamento a SET a.dataEmissione = :dataEmissione, a.dataScadenza = :dataScadenza, a.tipoAbbonamento = :tipoAbbonamento WHERE a.codiceUnico = :codiceUnico"
+        );
         query.setParameter("tipoAbbonamento", tipoAbbonamento);
         query.setParameter("dataEmissione", LocalDate.now());
-        if (tipoAbbonamento == TipoAbbonamento.SETTIMANALE) {
+        if (tipoAbbonamento == TipoAbbonamento.SETTIMANALE)
             query.setParameter("dataScadenza", LocalDate.now().plusDays(7));
-        } else {
+        else
             query.setParameter("dataScadenza", LocalDate.now().plusMonths(1));
-        }
         query.setParameter("codiceUnico", codiceUnico);
         query.executeUpdate();
         transaction.commit();
         System.out.println("Abbonamento Aggiornato con successo");
-
     }
 
-    public void scadenzaAbbonamento(int codiceUnico) {
-        TypedQuery<Abbonamento> query = entityManager.createQuery("SELECT a FROM Abbonamento a WHERE a.codiceUnico = :codiceUnico", Abbonamento.class);
-        query.setParameter("codiceUnico", codiceUnico);
-        Abbonamento abbonamento = query.getSingleResult();
-        if (abbonamento.getDataScadenza().isAfter(LocalDate.now()))
-            System.out.println("Il suo abbonamento è ancora valido");
-        else System.out.println("Il suo abbonamento è scaduto");
-
-
-    }
     public boolean isAbbonamentoValidoByCodiceTessera(long codiceTessera) {
-
         TypedQuery<Abbonamento> query = entityManager.createQuery(
-                "SELECT a FROM Abbonamento a " +
-                        "WHERE a.tessera.codiceTessera = :codice " +
-                        "ORDER BY a.dataScadenza DESC",
+                "SELECT a FROM Abbonamento a WHERE a.tessera.codiceTessera = :codice ORDER BY a.dataScadenza DESC",
                 Abbonamento.class
         );
         query.setParameter("codice", codiceTessera);
         query.setMaxResults(1);
         Abbonamento abbonamento = query.getResultStream().findFirst().orElse(null);
-        if (abbonamento == null) {
-            System.out.println("Nessun abbonamento trovato per la tessera " + codiceTessera);
-            return false;
-        }
-        boolean valido = !abbonamento.getDataScadenza().isBefore(LocalDate.now());
-        if (valido)
-            System.out.println("L'abbonamento è valido fino al " + abbonamento.getDataScadenza());
-        else
-            System.out.println("L'abbonamento è scaduto il " + abbonamento.getDataScadenza());
-        return valido;
+        if (abbonamento == null) return false;
+        return !abbonamento.getDataScadenza().isBefore(LocalDate.now());
     }
 
     public Abbonamento creaAbbonamento(PuntoEmissione punto, TipoAbbonamento tipo, Tessera tessera) {
-
         Abbonamento nuovo = new Abbonamento(punto, tipo, tessera);
-
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
         entityManager.persist(nuovo);
         transaction.commit();
-
-        System.out.println("Nuovo abbonamento creato \n Codice " + nuovo.getCodiceUnico());
+        System.out.println("Nuovo abbonamento creato. Codice " + nuovo.getCodiceUnico());
         return nuovo;
     }
-
-
-
-
 }

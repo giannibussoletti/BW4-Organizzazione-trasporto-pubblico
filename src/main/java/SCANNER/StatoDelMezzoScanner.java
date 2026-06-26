@@ -115,7 +115,6 @@ public class StatoDelMezzoScanner {
         System.out.println("\nRicerca Stato");
         System.out.print("Inserisci l'UUID dello Stato da cercare: ");
         String idStatoStr = scanner.nextLine();
-
         try {
             StatoDelMezzo statoTrovato = statoMezzoDAO.findById(idStatoStr);
             System.out.println("Risultato trovato:");

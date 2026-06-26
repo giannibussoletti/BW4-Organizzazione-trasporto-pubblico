@@ -15,63 +15,28 @@ public class MezzoDAO {
     }
 
     public void save(Mezzo newMezzo) {
-        EntityTransaction transaction = this.entityManager.getTransaction();
-
+        EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
-
-        this.entityManager.persist(newMezzo);
-
+        entityManager.persist(newMezzo);
         transaction.commit();
-
         System.out.println(newMezzo + "creato con successo!");
     }
 
     public Mezzo findById(String id) {
-
         TypedQuery<Mezzo> query = entityManager.createQuery(
                 "SELECT m FROM Mezzo m WHERE m.id = :id",
                 Mezzo.class
         );
-
         query.setParameter("id", UUID.fromString(id));
-
         return query.getSingleResult();
     }
 
-    //Chiedere si e meglio cambiare id per targa
     public void deleteById(String id) {
-
         EntityTransaction transaction = entityManager.getTransaction();
-
         transaction.begin();
-
         Mezzo found = findById(id);
-
         entityManager.remove(found);
-
         transaction.commit();
-
         System.out.println("Mezzo eliminato con successo!");
     }
-//    public void updateMezzo(
-//            UUID id,
-//            StatoMezzo tipoMezzo,
-//            int capienza,
-//            StatoMezzo statoMezzo
-//    ) {
-//
-//        EntityTransaction transaction = entityManager.getTransaction();
-//
-//        transaction.begin();
-//
-//        Mezzo found = findById(id);
-//
-//        found.setType(tipoMezzo);
-//        found.setCapienza(capienza);
-//
-//        transaction.commit();
-//
-//        System.out.println("Mezzo aggiornato con successo!");
-//    }
 }
-
