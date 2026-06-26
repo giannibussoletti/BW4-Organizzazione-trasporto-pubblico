@@ -61,11 +61,8 @@ public class ProvaMain {
 
         while (!b) {
             System.out.println("\nMENU UTENTE");
-            System.out.println("1) Acquista biglietto");
+            System.out.println("1) Acquista titolo di viaggio");
             System.out.println("2) Vidima biglietto");
-            System.out.println("3) Crea tessera");
-            System.out.println("4) Verifica abbonamento");
-            System.out.println("5) Acquista abbonamento");
             System.out.println("0) Torna indietro");
             System.out.print("Scelta: ");
 
@@ -75,9 +72,6 @@ public class ProvaMain {
             switch (scelta) {
                 case 1 -> System.out.println("h");
                 case 2 -> System.out.println("h");
-                case 3 -> System.out.println("h");
-                case 4 -> verificaAbbonamento();
-                case 5 -> acquistaAbbonamento();
                 case 0 -> b = true;
                 default -> System.out.println("Scelta non valida");
             }
