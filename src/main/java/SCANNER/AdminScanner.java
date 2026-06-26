@@ -2,16 +2,11 @@ package SCANNER;
 
 import DAO.*;
 import entities.Mezzo;
-import entities.PuntoEmissione;
-import entities.SingoloBiglietto;
-import entities.Tratta;
 import jakarta.persistence.EntityManager;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Scanner;
-import java.util.UUID;
 
 public class AdminScanner {
 

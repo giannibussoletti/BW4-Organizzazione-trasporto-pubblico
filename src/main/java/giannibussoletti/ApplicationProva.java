@@ -1,7 +1,6 @@
 package giannibussoletti;
 
 import DAO.*;
-import SCANNER.Acquisizione;
 import entities.*;
 import enums.StatoMezzo;
 import enums.TipoMezzo;
@@ -37,94 +36,105 @@ public class ApplicationProva {
         Tessera t1 = new Tessera();
         Tessera t2 = new Tessera();
         Tessera t3 = new Tessera();
+        Tessera t4 = new Tessera();
+        Tessera t5 = new Tessera();
 
+        tesseraDAO.save(t1);
+        tesseraDAO.save(t2);
+        tesseraDAO.save(t3);
+        tesseraDAO.save(t4);
+        tesseraDAO.save(t5);
 
         Utente u1 = new Utente("Mario", "Rossi", LocalDate.of(1990, 5, 12), t1);
         Utente u2 = new Utente("Luca", "Bianchi", LocalDate.of(1985, 3, 20), t2);
         Utente u3 = new Utente("Giulia", "Verdi", LocalDate.of(1998, 11, 2), t3);
+        Utente u4 = new Utente("Sara", "Neri", LocalDate.of(2000, 1, 15), t4);
+        Utente u5 = new Utente("Paolo", "Gialli", LocalDate.of(1975, 7, 8), t5);
+
+        utenteDAO.save(u1);
+        utenteDAO.save(u2);
+        utenteDAO.save(u3);
+        utenteDAO.save(u4);
+        utenteDAO.save(u5);
 
 
-        DistributoreAutomatico da1 = new DistributoreAutomatico("Via Roma 10", true);
-        DistributoreAutomatico da2 = new DistributoreAutomatico("Via Milano 22", false);
-        RivenditoreAutorizzato ra1 = new RivenditoreAutorizzato("Via Verdi 33", "Tabacchi SRL", "Tabaccheria Centrale");
+        PuntoEmissione pe1 = new DistributoreAutomatico("Via Roma 10", true);
+        PuntoEmissione pe2 = new DistributoreAutomatico("Via Milano 22", true);
+        PuntoEmissione pe3 = new RivenditoreAutorizzato("Via Verdi 33", "Tabacchi SRL", "Tabaccheria Centrale");
+        PuntoEmissione pe4 = new RivenditoreAutorizzato("Via Emilia 100", "Edicola 24", "Edicola Centrale");
+        PuntoEmissione pe5 = new DistributoreAutomatico("Stazione FS", true);
 
-//        PuntoEmissione peFromDB1 = puntoEmissioneDAO.findByID("6d96ab5a-eaff-48af-a058-9c9acaefe934");
-//        PuntoEmissione peFromDB2 = puntoEmissioneDAO.findByID("f0f13036-a21d-4e71-b38a-29ebcbb4a11e");
-//        PuntoEmissione peFromDB3 = puntoEmissioneDAO.findByID("f971e05d-7fba-4165-a2b5-241a8712870f");
+        puntoEmissioneDAO.save(pe1);
+        puntoEmissioneDAO.save(pe2);
+        puntoEmissioneDAO.save(pe3);
+        puntoEmissioneDAO.save(pe4);
+        puntoEmissioneDAO.save(pe5);
+
 
         Mezzo m1 = new Mezzo(TipoMezzo.AUTOBUS, 50, "AB123CD");
         Mezzo m2 = new Mezzo(TipoMezzo.TRAM, 120, "TRM567");
-        Mezzo m3 = new Mezzo(TipoMezzo.AUTOBUS, 300, "MTR999");
+        Mezzo m3 = new Mezzo(TipoMezzo.TRAM, 300, "MTR999");
+        Mezzo m4 = new Mezzo(TipoMezzo.AUTOBUS, 80, "AB888EF");
+        Mezzo m5 = new Mezzo(TipoMezzo.TRAM, 100, "TRM222");
 
-
-        Mezzo m1FromDB = mezzoDAO.findById("0d915f20-80d8-4ea8-a60d-4a9997c23bed");
-        Mezzo m2FromDB = mezzoDAO.findById("467b2420-5213-49d7-b7ad-3eaa592db9d3");
-
-        StatoDelMezzo sM1 = new StatoDelMezzo(StatoMezzo.ATTIVO, LocalDate.now(), m1FromDB);
-        StatoDelMezzo sM2 = new StatoDelMezzo(StatoMezzo.MANUTENZIONE, LocalDate.now(), m2FromDB);
+        mezzoDAO.save(m1);
+        mezzoDAO.save(m2);
+        mezzoDAO.save(m3);
+        mezzoDAO.save(m4);
+        mezzoDAO.save(m5);
 
 
         Tratta tr1 = new Tratta("Modena", "Sassuolo", LocalTime.of(0, 45));
         Tratta tr2 = new Tratta("Carpi", "Modena", LocalTime.of(0, 30));
         Tratta tr3 = new Tratta("Bologna", "Modena", LocalTime.of(1, 0));
+        Tratta tr4 = new Tratta("Reggio Emilia", "Modena", LocalTime.of(0, 40));
+        Tratta tr5 = new Tratta("Mirandola", "Modena", LocalTime.of(1, 10));
 
-        Tratta tr1FromDB = trattaDAO.findById("4d028197-c8b0-4ed0-9d53-074c6dd4268b");
-        Tratta tr2FromDB = trattaDAO.findById("6cbd6b4d-8a4f-4a9f-b6d5-753d8b8491e3");
-        Tratta tr3FromDB = trattaDAO.findById("e41564ed-ab32-431d-a06b-bdc87bbf27b0");
-
-        Percorrenza p1 = new Percorrenza(LocalTime.of(8, 0), tr3FromDB, m2FromDB);
-        Percorrenza p2 = new Percorrenza(LocalTime.of(9, 0), tr3FromDB, m2FromDB);
-        Percorrenza p3 = new Percorrenza(LocalTime.of(7, 30), tr3FromDB, m2FromDB);
-
-//        SingoloBiglietto b1 = new SingoloBiglietto(LocalDate.now(), m1, da1);
-//        SingoloBiglietto b2 = new SingoloBiglietto(LocalDate.now(), m2, da2);
-//        SingoloBiglietto b3 = new SingoloBiglietto(LocalDate.now(), m3, ra1);
-
-        Tessera t1FromDB = tesseraDAO.findByCodiceTessera(7103439486469225740L);
-        Tessera t2FromDB = tesseraDAO.findByCodiceTessera(1587270423070119018L);
-        Tessera t3FromDB = tesseraDAO.findByCodiceTessera(7211449860680267463L);
-
-//        Abbonamento a1 = new Abbonamento(peFromDB1, TipoAbbonamento.MENSILE, t1FromDB);
-//        Abbonamento a2 = new Abbonamento(peFromDB2, TipoAbbonamento.SETTIMANALE, t2FromDB);
-//        Abbonamento a3 = new Abbonamento(peFromDB3, TipoAbbonamento.MENSILE, t3FromDB);
+        trattaDAO.save(tr1);
+        trattaDAO.save(tr2);
+        trattaDAO.save(tr3);
+        trattaDAO.save(tr4);
+        trattaDAO.save(tr5);
 
 
-//        percorrenzaDAO.percorrenzeAttive().forEach(System.out::println);
-//        percorrenzaDAO.numPercorrenzeTratta("4d028197-c8b0-4ed0-9d53-074c6dd4268b");
-//        abbonamentoDAO.rinnovoAbbonamento(1821095931, TipoAbbonamento.MENSILE);
-//        abbonamentoDAO.scadenzaAbbonamento(1821095931);
-//        percorrenzaDAO.differenzaTempoPercorrenza("4d028197-c8b0-4ed0-9d53-074c6dd4268b");
-        Acquisizione.BigliettiEAbbonamenti(tesseraDAO, utenteDAO, bigliettoDAO, trattaDAO, percorrenzaDAO, puntoEmissioneDAO, abbonamentoDAO);
+        Percorrenza p1 = new Percorrenza(LocalTime.of(8, 0), tr1, m1);
+        Percorrenza p2 = new Percorrenza(LocalTime.of(9, 0), tr2, m2);
+        Percorrenza p3 = new Percorrenza(LocalTime.of(7, 30), tr3, m3);
+        Percorrenza p4 = new Percorrenza(LocalTime.of(10, 15), tr4, m4);
+        Percorrenza p5 = new Percorrenza(LocalTime.of(11, 45), tr5, m5);
 
-//        statoMezzoDAO.save(sM1);
-//        statoMezzoDAO.save(sM2);
-//        trattaDAO.save(tr1);
-//        trattaDAO.save(tr2);
-//        trattaDAO.save(tr3);
-//        percorrenzaDAO.save(p1);
-//        percorrenzaDAO.save(p2);
-//        percorrenzaDAO.save(p3);
-//        bigliettoDAO.save(b1);
-//        bigliettoDAO.save(b2);
-//        bigliettoDAO.save(b3);
-//        abbonamentoDAO.save(a1);
-//        abbonamentoDAO.save(a2);
-//        abbonamentoDAO.save(a3);
-//        tesseraDAO.save(t1);
-//        tesseraDAO.save(t2);
-//        tesseraDAO.save(t3);
-//        utenteDAO.save(u1);
-//        utenteDAO.save(u2);
-//        utenteDAO.save(u3);
-//        puntoEmissioneDAO.save(da1);
-//        puntoEmissioneDAO.save(da2);
-//        puntoEmissioneDAO.save(ra1);
-//        mezzoDAO.save(m1);
-//        mezzoDAO.save(m2);
-//        mezzoDAO.save(m3);
-//        System.out.println("salvato");
+        percorrenzaDAO.save(p1);
+        percorrenzaDAO.save(p2);
+        percorrenzaDAO.save(p3);
+        percorrenzaDAO.save(p4);
+        percorrenzaDAO.save(p5);
 
 
+        SingoloBiglietto b1 = new SingoloBiglietto(m1, pe1);
+        SingoloBiglietto b2 = new SingoloBiglietto(m2, pe2);
+        SingoloBiglietto b3 = new SingoloBiglietto(m3, pe3);
+        SingoloBiglietto b4 = new SingoloBiglietto(m4, pe4);
+        SingoloBiglietto b5 = new SingoloBiglietto(m5, pe5);
+
+        bigliettoDAO.save(b1);
+        bigliettoDAO.save(b2);
+        bigliettoDAO.save(b3);
+        bigliettoDAO.save(b4);
+        bigliettoDAO.save(b5);
+
+
+        StatoDelMezzo sm1 = new StatoDelMezzo(StatoMezzo.ATTIVO, LocalDate.now(), m1);
+        StatoDelMezzo sm2 = new StatoDelMezzo(StatoMezzo.MANUTENZIONE, LocalDate.now(), m2);
+        StatoDelMezzo sm3 = new StatoDelMezzo(StatoMezzo.ATTIVO, LocalDate.now(), m3);
+        StatoDelMezzo sm4 = new StatoDelMezzo(StatoMezzo.ATTIVO, LocalDate.now(), m4);
+        StatoDelMezzo sm5 = new StatoDelMezzo(StatoMezzo.MANUTENZIONE, LocalDate.now(), m5);
+
+        statoMezzoDAO.save(sm1);
+        statoMezzoDAO.save(sm2);
+        statoMezzoDAO.save(sm3);
+        statoMezzoDAO.save(sm4);
+        statoMezzoDAO.save(sm5);
+
+        System.out.println("DATABASE CREATO CON SUCCESSO (5 DATI PER TABELLA)");
     }
 }
-
