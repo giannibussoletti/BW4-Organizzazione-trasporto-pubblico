@@ -2,6 +2,7 @@ package DAO;
 
 import entities.Percorrenza;
 import entities.Tratta;
+import exception.NotFoundException;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.TypedQuery;
@@ -29,6 +30,11 @@ public class PercorrenzaDAO {
         transaction.commit();
 
         System.out.println("Percorrenza creata correttamente");
+    }
+    public Percorrenza findById(String id) {
+        Percorrenza found = entityManager.find(Percorrenza.class, UUID.fromString(id));
+        if (found == null) throw new NotFoundException(id);
+        return found;
     }
 
     public List<Percorrenza> percorrenzeAttive() {
