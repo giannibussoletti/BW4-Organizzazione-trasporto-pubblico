@@ -1,6 +1,8 @@
 package DAO;
 
 import entities.Abbonamento;
+import entities.PuntoEmissione;
+import entities.Tessera;
 import enums.TipoAbbonamento;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
@@ -81,6 +83,20 @@ public class AbbonamentoDAO {
             System.out.println("L'abbonamento è scaduto il " + abbonamento.getDataScadenza());
         return valido;
     }
+
+    public Abbonamento creaAbbonamento(PuntoEmissione punto, TipoAbbonamento tipo, Tessera tessera) {
+
+        Abbonamento nuovo = new Abbonamento(punto, tipo, tessera);
+
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+        entityManager.persist(nuovo);
+        transaction.commit();
+
+        System.out.println("Nuovo abbonamento creato \n Codice " + nuovo.getCodiceUnico());
+        return nuovo;
+    }
+
 
 
 
