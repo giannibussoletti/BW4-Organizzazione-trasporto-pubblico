@@ -52,6 +52,17 @@ public class AbbonamentoDAO {
         System.out.println("Abbonamento Aggiornato con successo");
     }
 
+    public void scadenzaAbbonamento(int codiceUnico) {
+        TypedQuery<Abbonamento> query = entityManager.createQuery("SELECT a FROM Abbonamento a WHERE a.codiceUnico = :codiceUnico", Abbonamento.class);
+        query.setParameter("codiceUnico", codiceUnico);
+        Abbonamento abbonamento = query.getSingleResult();
+        if (abbonamento.getDataScadenza().isAfter(LocalDate.now()))
+            System.out.println("Il suo abbonamento è ancora valido");
+        else System.out.println("Il suo abbonamento è scaduto");
+
+
+    }
+
     public boolean isAbbonamentoValidoByCodiceTessera(long codiceTessera) {
         TypedQuery<Abbonamento> query = entityManager.createQuery(
                 "SELECT a FROM Abbonamento a WHERE a.tessera.codiceTessera = :codice ORDER BY a.dataScadenza DESC",
@@ -73,4 +84,6 @@ public class AbbonamentoDAO {
         System.out.println("Nuovo abbonamento creato. Codice " + nuovo.getCodiceUnico());
         return nuovo;
     }
+
+
 }

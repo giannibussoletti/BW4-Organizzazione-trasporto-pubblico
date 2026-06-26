@@ -14,6 +14,7 @@ public class Acquisizione {
     public static void BigliettiEAbbonamenti(TesseraDAO tesseraDAO, UtenteDAO utenteDAO, SingoloBigliettoDAO singoloBigliettoDAO, TrattaDAO trattaDAO, PercorrenzaDAO percorrenzaDAO, PuntoEmissioneDAO puntoEmissioneDAO, AbbonamentoDAO abbonamentoDAO) {
         Scanner scanner = new Scanner(System.in);
         PuntoEmissione puntoScelto = null;
+        Tessera tesseraUtente = null;
         while (true) {
 
             System.out.println("benvenuto");
@@ -50,7 +51,7 @@ public class Acquisizione {
                         case "si" -> {
                             System.out.println("Inserisci il numero di tessera");
                             long numeroTessera = Long.parseLong(scanner.nextLine());
-                            Tessera tesseraUtente = tesseraDAO.findByCodiceTessera(numeroTessera);
+                            tesseraUtente = tesseraDAO.findByCodiceTessera(numeroTessera);
                             if (tesseraUtente.getDataDiRinnovo().isBefore(LocalDate.now())) {
                                 System.out.println("La tessera utente è scaduta, vuoi rinnovarla? (si o no)");
                                 String choiceRinnovo = scanner.nextLine().toLowerCase();
@@ -71,6 +72,22 @@ public class Acquisizione {
                                 if (abbonamentoValido) {
                                     System.out.println("Il tuo abbonamento è ancora valido, ti auguriamo buon viaggio");
                                     System.exit(0);
+                                } else if (!abbonamentoValido) {
+                                    System.out.println("Vuoi aggiungere un abbonamento alla tua tessera");
+                                    String sceltaNuovo = scanner.nextLine().toLowerCase();
+                                    if (sceltaNuovo.equalsIgnoreCase("si")) {
+                                        CreazioneAbbonamento.creazione(puntoEmissioneDAO, abbonamentoDAO, puntoScelto, tesseraUtente);
+                                    } else {
+                                        System.out.println("Vuoi acquistare singoli biglietti?");
+                                        String choiceAcquisto = scanner.nextLine();
+                                        while (true) {
+                                            if (choiceAcquisto.equalsIgnoreCase("si") || choiceAcquisto.equalsIgnoreCase("no")) {
+                                                CreazioneBiglietti.vendita(choiceAcquisto, trattaDAO, percorrenzaDAO, puntoEmissioneDAO, singoloBigliettoDAO, puntoScelto);
+                                                break;
+                                            } else System.out.println("Valore non valido");
+                                        }
+                                    }
+
                                 } else {
                                     System.out.println("Il tuo abbonamento è scaduto, vuoi rinnovarlo?");
                                     String choiceRinnovo = scanner.nextLine().toLowerCase();
@@ -120,13 +137,13 @@ public class Acquisizione {
                                 if (tesseramento.equalsIgnoreCase("si") || tesseramento.equalsIgnoreCase("no")) {
                                     switch (tesseramento) {
                                         case "si" -> {
-                                            String nomeNuovoAbbonato;
-                                            String cognomeNuovoAbbonato;
-                                            LocalDate dataNascitaNuovoAbbonato;
+                                            String nomeNuovoTesserato;
+                                            String cognomeNuovoTesserato;
+                                            LocalDate dataNascitaNuovoTesserato;
                                             while (true) {
                                                 System.out.println("Inserisci il tuo nome");
-                                                nomeNuovoAbbonato = scanner.nextLine();
-                                                System.out.println("Confermi che " + nomeNuovoAbbonato + " è corretto? (si o no)");
+                                                nomeNuovoTesserato = scanner.nextLine();
+                                                System.out.println("Confermi che " + nomeNuovoTesserato + " è corretto? (si o no)");
                                                 if (scanner.nextLine().equalsIgnoreCase("si")) break;
                                                 else if (scanner.nextLine().equalsIgnoreCase("no")) {
                                                     System.out.println("Nuovo tentativo");
@@ -137,8 +154,8 @@ public class Acquisizione {
                                             }
                                             while (true) {
                                                 System.out.println("Inserisci il tuo cognome");
-                                                cognomeNuovoAbbonato = scanner.nextLine();
-                                                System.out.println("Confermi che " + cognomeNuovoAbbonato + " è corretto? (si o no)");
+                                                cognomeNuovoTesserato = scanner.nextLine();
+                                                System.out.println("Confermi che " + cognomeNuovoTesserato + " è corretto? (si o no)");
                                                 if (scanner.nextLine().equalsIgnoreCase("si")) break;
                                                 else if (scanner.nextLine().equalsIgnoreCase("no")) {
                                                     System.out.println("Nuovo tentativo");
@@ -148,8 +165,8 @@ public class Acquisizione {
                                             }
                                             while (true) {
                                                 System.out.println("Inserisci la tua data di nascita (yyyy-mm-dd)");
-                                                dataNascitaNuovoAbbonato = LocalDate.parse(scanner.nextLine());
-                                                System.out.println("Confermi che " + dataNascitaNuovoAbbonato + " è corretta? (si o no)");
+                                                dataNascitaNuovoTesserato = LocalDate.parse(scanner.nextLine());
+                                                System.out.println("Confermi che " + dataNascitaNuovoTesserato + " è corretta? (si o no)");
                                                 if (scanner.nextLine().equalsIgnoreCase("si")) break;
                                                 else if (scanner.nextLine().equalsIgnoreCase("no")) {
                                                     System.out.println("Nuovo tentativo");
@@ -157,9 +174,27 @@ public class Acquisizione {
                                                     System.out.println("valore non valido");
                                                 }
                                             }
-                                            Tessera nuovaTessera = new Tessera();
-                                            tesseraDAO.save(nuovaTessera);
-                                            utenteDAO.save(new Utente(nomeNuovoAbbonato, cognomeNuovoAbbonato, dataNascitaNuovoAbbonato, nuovaTessera));
+
+                                            System.out.println("Vuoi aggiungere un abbonamento alla tua tessera");
+                                            String sceltaNuovo = scanner.nextLine().toLowerCase();
+                                            if (sceltaNuovo.equalsIgnoreCase("si")) {
+                                                Tessera nuovaTessera = new Tessera();
+                                                tesseraDAO.save(nuovaTessera);
+                                                CreazioneAbbonamento.creazione(puntoEmissioneDAO, abbonamentoDAO, puntoScelto, nuovaTessera);
+                                                utenteDAO.save(new Utente(nomeNuovoTesserato, cognomeNuovoTesserato, dataNascitaNuovoTesserato, nuovaTessera));
+                                            } else {
+                                                Tessera nuovaTessera = new Tessera();
+                                                tesseraDAO.save(nuovaTessera);
+                                                utenteDAO.save(new Utente(nomeNuovoTesserato, cognomeNuovoTesserato, dataNascitaNuovoTesserato, nuovaTessera));
+                                                System.out.println("Vuoi acquistare singoli biglietti?");
+                                                String choiceAcquisto = scanner.nextLine();
+                                                while (true) {
+                                                    if (choiceAcquisto.equalsIgnoreCase("si") || choiceAcquisto.equalsIgnoreCase("no")) {
+                                                        CreazioneBiglietti.vendita(choiceAcquisto, trattaDAO, percorrenzaDAO, puntoEmissioneDAO, singoloBigliettoDAO, puntoScelto);
+                                                        break;
+                                                    } else System.out.println("Valore non valido");
+                                                }
+                                            }
 
                                         }
                                         case "no" -> {

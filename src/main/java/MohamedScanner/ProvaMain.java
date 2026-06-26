@@ -7,6 +7,7 @@ import entities.DistributoreAutomatico;
 import entities.PuntoEmissione;
 import entities.Tessera;
 import enums.TipoAbbonamento;
+import gianniScanner.Acquisizione;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
@@ -30,6 +31,10 @@ public class ProvaMain {
     private static final PercorrenzaScan percorrenzaScanner = new PercorrenzaScan(em);
     private static final MezzoScanner mezzoScanner = new MezzoScanner(em);
     private static final StatoDelMezzoScanner statoScanner = new StatoDelMezzoScanner(em);
+    private static final TesseraDAO tesseraDAO = new TesseraDAO(em);
+    private static final UtenteDAO utenteDAO = new UtenteDAO(em);
+    private static final PuntoEmissioneDAO puntoEmissioneDAO = new PuntoEmissioneDAO(em);
+    private static final SingoloBigliettoDAO bigliettoDAO = new SingoloBigliettoDAO(em);
 
     public static void main(String[] args) {
 
@@ -57,6 +62,7 @@ public class ProvaMain {
         emf.close();
         System.out.println("Programma terminato");
     }
+
     private static void menuUtente() {
         boolean b = false;
 
@@ -71,7 +77,8 @@ public class ProvaMain {
             scanner.nextLine();
 
             switch (scelta) {
-                case 1 -> System.out.println("h");
+                case 1 ->
+                        Acquisizione.BigliettiEAbbonamenti(tesseraDAO, utenteDAO, bigliettoDAO, trattaDAO, percorrenzaDAO, puntoEmissioneDAO, abbonamentoDAO);
                 case 2 -> vidimaBiglietto();
                 case 0 -> b = true;
                 default -> System.out.println("Scelta non valida");
