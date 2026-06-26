@@ -102,7 +102,6 @@ public class TesseraDAO {
     }
 
     public int trovaNumeroAbbonamentoByCodiceTessera(long codiceTessera) {
-//        SELECT p FROM Percorrenza p JOIN FETCH p.mezzo JOIN FETCH p.tratta t WHERE t = :tratta
         TypedQuery<Abbonamento> query = em.createQuery("SELECT a FROM Abbonamento a JOIN FETCH a.tessera t WHERE t.codiceTessera = :codiceTessera ", Abbonamento.class);
         query.setParameter("codiceTessera", codiceTessera);
         return query.getSingleResult().getCodiceUnico();

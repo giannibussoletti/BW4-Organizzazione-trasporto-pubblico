@@ -1,10 +1,12 @@
-package SCANNER;
+package MohamedScanner;
 
-import DAO.AbbonamentoDAO;
-import DAO.PercorrenzaDAO;
-import DAO.TrattaDAO;
-import MohamedScanner.PercorrenzaScan;
-import MohamedScanner.TrattaScan;
+import DAO.*;
+import SCANNER.MezzoScanner;
+import SCANNER.StatoDelMezzoScanner;
+import entities.DistributoreAutomatico;
+import entities.PuntoEmissione;
+import entities.Tessera;
+import enums.TipoAbbonamento;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
@@ -21,15 +23,19 @@ public class ProvaMain {
     private static final AbbonamentoDAO abbonamentoDAO = new AbbonamentoDAO(em);
     private static final TrattaDAO trattaDAO = new TrattaDAO(em);
     private static final PercorrenzaDAO percorrenzaDAO = new PercorrenzaDAO(em);
+    private static final MezzoDAO mezzoDAO = new MezzoDAO(em);
+    private static final StatoMezzoDAO statoMezzoDAO = new StatoMezzoDAO(em);
     private static final TrattaScan trattaScanner = new TrattaScan(em);
     private static final PercorrenzaScan percorrenzaScanner = new PercorrenzaScan(em);
+    private static final MezzoScanner mezzoScanner = new MezzoScanner(em);
+    private static final StatoDelMezzoScanner statoScanner = new StatoDelMezzoScanner(em);
 
     public static void main(String[] args) {
 
         boolean i = true;
 
         while (i) {
-            System.out.println(" MENU PRINCIPALE");
+            System.out.println("\nMENU PRINCIPALE");
             System.out.println("1) Utente");
             System.out.println("2) Amministratore");
             System.out.println("0) Esci");
@@ -50,29 +56,28 @@ public class ProvaMain {
         emf.close();
         System.out.println("Programma terminato");
     }
-
     private static void menuUtente() {
         boolean b = false;
 
         while (!b) {
-            System.out.println("\n MENU UTENTE ");
+            System.out.println("\nMENU UTENTE");
             System.out.println("1) Acquista biglietto");
             System.out.println("2) Vidima biglietto");
             System.out.println("3) Crea tessera");
             System.out.println("4) Verifica abbonamento");
             System.out.println("5) Acquista abbonamento");
             System.out.println("0) Torna indietro");
-            System.out.print("scelta: ");
+            System.out.print("Scelta: ");
 
             int scelta = scanner.nextInt();
             scanner.nextLine();
 
             switch (scelta) {
-                case 1 -> System.out.println("f");
-                case 2 -> System.out.println("f");
-                case 3 -> System.out.println("f");
+                case 1 -> System.out.println("h");
+                case 2 -> System.out.println("h");
+                case 3 -> System.out.println("h");
                 case 4 -> verificaAbbonamento();
-                case 5 -> System.out.println("f");
+                case 5 -> acquistaAbbonamento();
                 case 0 -> b = true;
                 default -> System.out.println("Scelta non valida");
             }
@@ -83,15 +88,11 @@ public class ProvaMain {
         boolean b = false;
 
         while (!b) {
-            System.out.println("\n MENU AMMINISTRATORE ");
-            System.out.println("1) Biglietti emessi in un periodo");
-            System.out.println("2) Abbonamenti emessi in un periodo");
-            System.out.println("3) Biglietti vidimati per mezzo");
-            System.out.println("4) Mezzi in manutenzione");
-            System.out.println("5) Percorrenze attive");
-            System.out.println("6) Tempo medio percorrenza tratta");
-            System.out.println("7) Gestione Tratte");
-            System.out.println("8) Gestione Percorrenze");
+            System.out.println("\nMENU AMMINISTRATORE");
+            System.out.println("1) Gestione Mezzi");
+            System.out.println("2) Gestione Stato Mezzi");
+            System.out.println("3) Gestione Tratte");
+            System.out.println("4) Gestione Percorrenze");
             System.out.println("0) Torna indietro");
             System.out.print("Scelta: ");
 
@@ -99,15 +100,10 @@ public class ProvaMain {
             scanner.nextLine();
 
             switch (scelta) {
-                case 1 -> System.out.println("f");
-                case 2 -> System.out.println("f");
-                case 3 -> System.out.println("f");
-                case 4 -> System.out.println("f");
-                case 5 -> System.out.println("f");
-                case 6 -> System.out.println("f");
-                case 7 -> trattaScanner.start();
-                case 8 -> percorrenzaScanner.start();
-
+                case 1 -> mezzoScanner.start();
+                case 2 -> statoScanner.start();
+                case 3 -> trattaScanner.start();
+                case 4 -> percorrenzaScanner.start();
                 case 0 -> b = true;
                 default -> System.out.println("Scelta non valida");
             }
@@ -115,15 +111,28 @@ public class ProvaMain {
     }
 
     private static void verificaAbbonamento() {
-        System.out.println("Inserisci codice tessera:");
+        System.out.println("inserisci codice tessera");
         long codice = Long.parseLong(scanner.nextLine());
 
         boolean valido = abbonamentoDAO.isAbbonamentoValidoByCodiceTessera(codice);
+    }
+    private static void acquistaAbbonamento() {
 
-        if (valido) {
-            System.out.println("L'abbonamento è valido.");
-        } else {
-            System.out.println("L'abbonamento NON è valido.");
-        }
+        System.out.println("Inserisci codice tessera");
+        long codice = Long.parseLong(scanner.nextLine());
+
+        Tessera tessera = new TesseraDAO(em).findByCodiceTessera(codice);
+        System.out.println("Tipo abbonamento:");
+        System.out.println("1) Settimanale");
+        System.out.println("2) Mensile");
+        int scelta = Integer.parseInt(scanner.nextLine());
+        TipoAbbonamento tipo =
+                scelta == 1 ? TipoAbbonamento.SETTIMANALE : TipoAbbonamento.MENSILE;
+
+        PuntoEmissione punto = new DistributoreAutomatico("Via Roma 10", true);
+
+        abbonamentoDAO.creaAbbonamento(punto, tipo, tessera);
+
+        System.out.println("abbonamento acquistato con successo");
     }
 }
