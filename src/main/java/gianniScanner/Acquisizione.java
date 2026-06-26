@@ -19,7 +19,7 @@ public class Acquisizione {
             System.out.println("benvenuto");
             while (true) {
 
-                System.out.println("Da dove stai acquistando?\n1)Distributore automatico\n2) Rivenditore autorizzato");
+                System.out.println("Da dove stai acquistando?\n1) Distributore automatico\n2) Rivenditore autorizzato");
                 if (scanner.hasNextInt()) {
                     int choice = scanner.nextInt();
                     if (choice == 1 || choice == 2) {
