@@ -18,7 +18,7 @@ public class MezzoScanner {
         boolean running = true;
 
         while (running) {
-            System.out.println("\n===== GESTIONE MEZZI DI TRASPORTO =====");
+            System.out.println("\nGESTIONE MEZZI DI TRASPORTO");
             System.out.println("1. Crea e Salva un nuovo Mezzo");
             System.out.println("2. Cerca Mezzo tramite ID");
             System.out.println("3. Elimina Mezzo tramite ID");
@@ -95,7 +95,7 @@ public class MezzoScanner {
     }
 
     private void gestisciFindById() {
-        System.out.println("\n--- Ricerca Mezzo ---");
+        System.out.println("\n Ricerca Mezzo");
         System.out.print("Inserisci l'UUID del Mezzo da cercare: ");
         String idStr = scanner.nextLine().trim();
 
@@ -111,7 +111,7 @@ public class MezzoScanner {
     }
 
     private void gestisciDeleteById() {
-        System.out.println("\n--- Eliminazione Mezzo ---");
+        System.out.println("\n Eliminazione Mezzo ");
         System.out.print("Inserisci l'UUID del Mezzo da eliminare: ");
         String idStr = scanner.nextLine().trim();
 
