@@ -62,7 +62,6 @@ public class PercorrenzaScan {
         Percorrenza p = new Percorrenza(oraPartenza, tratta, mezzo);
         percorrenzaDAO.save(p);
 
-        System.out.println("Percorrenza creata!");
     }
 
     private void cercaPercorrenza() {

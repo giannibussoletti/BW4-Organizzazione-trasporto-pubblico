@@ -47,10 +47,20 @@ public class TrattaScan {
         System.out.println("Inserisci capolinea:");
         String capolinea = scanner.nextLine();
 
-        System.out.println("Inserisci tempo percorrenza");
-        LocalTime tempo = LocalTime.parse(scanner.nextLine());
+        LocalTime tempoPercorrenza = null;
 
-        Tratta t = new Tratta(partenza, capolinea, tempo);
+        while (tempoPercorrenza == null) {
+            try {
+                System.out.println("Inserisci tempo percorrenza (formato HH:mm):");
+                String input = scanner.nextLine();
+                tempoPercorrenza = LocalTime.parse(input);
+            } catch (Exception e) {
+                System.out.println("Formato non valido \n Devi usare HH:mm (esempio: 01:30)");
+            }
+        }
+
+
+        Tratta t = new Tratta(partenza, capolinea, tempoPercorrenza);
         trattaDAO.save(t);
 
         System.out.println("Tratta creata!");
